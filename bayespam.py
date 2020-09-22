@@ -180,6 +180,10 @@ def main():
 
     print("N regular messages: ", len(bayespam.regular_list))
     print("N spam messages: ", len(bayespam.spam_list))
+    total = len(bayespam.regular_list) + len(bayespam.spam_list)
+    print("Total amount of massages", total)
+    print("Probability for regular", len(bayespam.regular_list) / total)
+    print("Probability for spam", len(bayespam.spam_list) / total)
 
     """
     Now, implement the follow code yourselves:
