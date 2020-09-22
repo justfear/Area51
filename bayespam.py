@@ -2,6 +2,7 @@ import argparse
 import os
 import string
 import re
+from collections import defaultdict
 
 from enum import Enum
 
@@ -136,10 +137,12 @@ class Bayespam():
         Writes the current vocabulary to a separate .txt file for easier inspection.
 
         :param destination_fp: Destination file path of the vocabulary file
+        :param n_regular: The number of occurrences of regular words
+        :param n_spam: The number of occurrences of spam words
         :param sort_by_freq: Set to True to sort the vocab by total frequency (descending order)
         :return: A 2-D dictionary containing all words as entries and their conditional probabilities (regular and spam)
         """
-        repertory = {}
+        repertory = defaultdict(dict)
 
         if sort_by_freq:
             vocab = sorted(self.vocab.items(), key=lambda x: x[1].counter_regular + x[1].counter_spam, reverse=True)
@@ -148,29 +151,26 @@ class Bayespam():
             vocab = self.vocab
 
         try:
-            f = open(destination_fp, 'w', encoding="latin1")
-
-            for word, counter in vocab.items():
-                if counter.counter_regular == 0:
-                    conditional_regular = 1/(n_regular + n_spam)
-                    conditional_spam = counter.counter_spam / n_spam
-                elif counter.counter_spam == 0:
-                    conditional_regular = counter.counter_regular / n_regular
-                    conditional_spam = 1/(n_regular + n_spam)
-                else:
-                    conditional_regular = counter.counter_regular / n_regular
-                    conditional_spam = counter.counter_spam / n_spam
-
-                repertory[word]['regular'] = conditional_regular
-                repertory[word]['spam'] = conditional_spam
-
-                # repr(word) makes sure that special  characters such as \t (tab) and \n (newline) are printed.
-                f.write("%s | In regular: %d | In spam: %d\n" % (
-                    repr(word), counter.counter_regular, counter.counter_spam), )
-
-            f.close()
+            with open(destination_fp, 'w', encoding="latin1") as f:
+                for word, counter in vocab.items():
+                    # repr(word) makes sure that special  characters such as \t (tab) and \n (newline) are printed.
+                    f.write("%s | In regular: %d | In spam: %d\n" % (
+                        repr(word), counter.counter_regular, counter.counter_spam), )
         except Exception as e:
             print("An error occurred while writing the vocab to a file: ", e)
+
+        for word, counter in vocab.items():
+            if counter.counter_regular == 0:
+                conditional_regular = 1 / (n_regular + n_spam)
+                conditional_spam = counter.counter_spam / n_spam
+            elif counter.counter_spam == 0:
+                conditional_regular = counter.counter_regular / n_regular
+                conditional_spam = 1 / (n_regular + n_spam)
+            else:
+                conditional_regular = counter.counter_regular / n_regular
+                conditional_spam = counter.counter_spam / n_spam
+            repertory[word]['regular'] = conditional_regular
+            repertory[word]['spam'] = conditional_spam
 
         return repertory
 
@@ -199,7 +199,7 @@ def main():
     n_words_spam = bayespam.read_messages(MessageType.SPAM)
 
     # bayespam.print_vocab()
-    repertory = bayespam.write_vocab("vocab.txt", n_regular=n_words_regular, n_spam=n_words_spam)
+    repertory = bayespam.write_vocab(destination_fp="vocab.txt", n_regular=n_words_regular, n_spam=n_words_spam)
 
     print("N regular messages: ", len(bayespam.regular_list))
     print("N spam messages: ", len(bayespam.spam_list))
