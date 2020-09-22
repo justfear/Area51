@@ -98,11 +98,11 @@ class Bayespam():
                     # Loop through the tokens
                     for idx in range(len(split_line)):
                         token = split_line[idx]
-                        # Convert characters to lower case, remove punctuations, and remove digits
+                        ## Convert characters to lower case, remove punctuations, and remove digits
                         token = "".join([char.lower() for char in token if char not in string.punctuation
                                          and not char.isdigit() and not re.search("[\\\\\s]", token)])
-                        # Remove any words with fewer tha four letters
-                        token = ' '.join(char for char in token.split() if len(char) > 4)
+                        ## Remove any words with fewer than four letters
+                        token = '' if len(token) < 4 else token
                         if token in self.vocab.keys():
                             # If the token is already in the vocab, retrieve its counter
                             counter = self.vocab[token]
@@ -112,6 +112,7 @@ class Bayespam():
 
                         # Increment the token's counter by one and store in the vocab
                         counter.increment_counter(message_type)
+                        ## If the token is empty, we don't add it, else it will return true if it is non-empty
                         if token:
                             total += 1
                             self.vocab[token] = counter
@@ -156,21 +157,21 @@ class Bayespam():
                     # repr(word) makes sure that special  characters such as \t (tab) and \n (newline) are printed.
                     f.write("%s | In regular: %d | In spam: %d\n" % (
                         repr(word), counter.counter_regular, counter.counter_spam), )
+                    ## If we have a 0 probability, replace it with an estimate
+                    if counter.counter_regular == 0:
+                        conditional_regular = 1 / (n_regular + n_spam)
+                        conditional_spam = counter.counter_spam / n_spam
+                    elif counter.counter_spam == 0:
+                        conditional_regular = counter.counter_regular / n_regular
+                        conditional_spam = 1 / (n_regular + n_spam)
+                    else:
+                        conditional_regular = counter.counter_regular / n_regular
+                        conditional_spam = counter.counter_spam / n_spam
+                    repertory[word]['regular'] = conditional_regular
+                    repertory[word]['spam'] = conditional_spam
+                f.close()
         except Exception as e:
             print("An error occurred while writing the vocab to a file: ", e)
-
-        for word, counter in vocab.items():
-            if counter.counter_regular == 0:
-                conditional_regular = 1 / (n_regular + n_spam)
-                conditional_spam = counter.counter_spam / n_spam
-            elif counter.counter_spam == 0:
-                conditional_regular = counter.counter_regular / n_regular
-                conditional_spam = 1 / (n_regular + n_spam)
-            else:
-                conditional_regular = counter.counter_regular / n_regular
-                conditional_spam = counter.counter_spam / n_spam
-            repertory[word]['regular'] = conditional_regular
-            repertory[word]['spam'] = conditional_spam
 
         return repertory
 
