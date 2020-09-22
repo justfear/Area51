@@ -73,8 +73,9 @@ class Bayespam():
         Parse all messages in either the 'regular' or 'spam' directory. Each token is stored in the vocabulary,
         together with a frequency count of its occurrences in both message types.
         :param message_type: The message type to be parsed (MessageType.REGULAR or MessageType.SPAM)
-        :return: None
+        :return: The total number of words contained in the messages specified
         """
+        total = 0
         if message_type == MessageType.REGULAR:
             message_list = self.regular_list
         elif message_type == MessageType.SPAM:
@@ -111,11 +112,14 @@ class Bayespam():
                         # Increment the token's counter by one and store in the vocab
                         counter.increment_counter(message_type)
                         if token:
+                            total += 1
                             self.vocab[token] = counter
 
             except Exception as e:
                 print("Error while reading message %s: " % msg, e)
                 exit()
+
+        return total
 
     def print_vocab(self):
         """
@@ -174,9 +178,9 @@ def main():
     bayespam.list_dirs(train_path)
 
     # Parse the messages in the regular message directory
-    bayespam.read_messages(MessageType.REGULAR)
+    n_words_regular = bayespam.read_messages(MessageType.REGULAR)
     # Parse the messages in the spam message directory
-    bayespam.read_messages(MessageType.SPAM)
+    n_words_spam = bayespam.read_messages(MessageType.SPAM)
 
     # bayespam.print_vocab()
     bayespam.write_vocab("vocab.txt")
@@ -187,8 +191,8 @@ def main():
     print("Total amount of massages", total)
     print("Probability for regular", len(bayespam.regular_list) / total)
     print("Probability for spam", len(bayespam.spam_list) / total)
-
-
+    print("Sum of total regular words in the vocabulary ", n_words_regular)
+    print("Sum of total regular words in the vocabulary ", n_words_spam)
 
     """
     Now, implement the follow code yourselves:
