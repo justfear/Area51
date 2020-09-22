@@ -99,7 +99,7 @@ class Bayespam():
                         # remove punctuations, convert characters to lower case and remove digits
                         token = "".join([char.lower() for char in token if char not in string.punctuation
                                          and not char.isdigit() and not re.search("[\\\\\s]", token)])
-                        token = ' '.join(word for word in token.split() if len(word) > 4)
+                        token = ' '.join(char for char in token.split() if len(char) > 4)
                         if token in self.vocab.keys():
                             # If the token is already in the vocab, retrieve its counter
                             counter = self.vocab[token]
