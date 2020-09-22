@@ -96,9 +96,10 @@ class Bayespam():
                     # Loop through the tokens
                     for idx in range(len(split_line)):
                         token = split_line[idx]
-                        # remove punctuations, convert characters to lower case and remove digits
+                        # Convert characters to lower case, remove punctuations, and remove digits
                         token = "".join([char.lower() for char in token if char not in string.punctuation
                                          and not char.isdigit() and not re.search("[\\\\\s]", token)])
+                        # Remove any words with fewer tha four letters
                         token = ' '.join(char for char in token.split() if len(char) > 4)
                         if token in self.vocab.keys():
                             # If the token is already in the vocab, retrieve its counter
