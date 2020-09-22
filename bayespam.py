@@ -3,6 +3,7 @@ import os
 import string
 import re
 from collections import defaultdict
+from math import log10
 
 from enum import Enum
 
@@ -73,6 +74,9 @@ class Bayespam():
         """
         Parse all messages in either the 'regular' or 'spam' directory. Each token is stored in the vocabulary,
         together with a frequency count of its occurrences in both message types.
+        Converts all words to lower case and strips them of any punctuation, spacing and numerals.
+        Discards any word that has less than four letters.
+
         :param message_type: The message type to be parsed (MessageType.REGULAR or MessageType.SPAM)
         :return: The total number of words contained in the messages specified
         """
@@ -133,6 +137,7 @@ class Bayespam():
     def write_vocab(self, destination_fp, n_regular, n_spam, sort_by_freq=False):
         """
         Writes the current vocabulary to a separate .txt file for easier inspection.
+        Computes conditional probabilities for both regular and spam words.
 
         :param destination_fp: Destination file path of the vocabulary file
         :param n_regular: The number of occurrences of regular words
@@ -140,7 +145,7 @@ class Bayespam():
         :param sort_by_freq: Set to True to sort the vocab by total frequency (descending order)
         :return: A 2-D dictionary containing all words as entries and their conditional probabilities (regular and spam)
         """
-        repertory = defaultdict(dict)
+        conditional_probabilities = defaultdict(dict)
 
         if sort_by_freq:
             vocab = sorted(self.vocab.items(), key=lambda x: x[1].counter_regular + x[1].counter_spam, reverse=True)
@@ -161,16 +166,37 @@ class Bayespam():
                     elif counter.counter_spam == 0:
                         conditional_regular = counter.counter_regular / n_regular
                         conditional_spam = 1 / (n_regular + n_spam)
+                    ## Else compute the conditional probabilities normally
                     else:
                         conditional_regular = counter.counter_regular / n_regular
                         conditional_spam = counter.counter_spam / n_spam
-                    repertory[word]['regular'] = conditional_regular
-                    repertory[word]['spam'] = conditional_spam
+                    conditional_probabilities[word]['regular'] = conditional_regular
+                    conditional_probabilities[word]['spam'] = conditional_spam
                 f.close()
         except Exception as e:
             print("An error occurred while writing the vocab to a file: ", e)
 
-        return repertory
+        return conditional_probabilities
+
+
+def compute_probability(conditional_probabilities, probability_regular, probability_spam):
+    """
+    Computes the probability that the mail is a spam and the probability that the mail is just regular mail.
+    Outputs a decision on whether it is spam or regular mail.
+
+    :param conditional_probabilities: Destination file path of the vocabulary file
+    :param probability_regular: The number of occurrences of regular words
+    :param probability_spam: The number of occurrences of spam words
+    :return: True if the computed probabilities point to a spam mail, False if they point to a regular mail
+    """
+    for word in conditional_probabilities:
+        probability_regular *= log10(word['regular'])
+        probability_spam *= log10(word['spam'])
+
+    return True if probability_spam > probability_regular else False
+
+def test_data(conditional_probabilities, probability_regular, probability_spam):
+
 
 
 def main():
@@ -185,35 +211,42 @@ def main():
 
     # Read the file path of the folder containing the training set from the input arguments
     train_path = args.train_path
+    ## Read the file path of the folder containing the test set from the input arguments
+    test_path = args.train_path
 
     # Initialize a Bayespam object
     bayespam = Bayespam()
     # Initialize a list of the regular and spam message locations in the training folder
     bayespam.list_dirs(train_path)
+    ## Initialize a list of the regular and spam message locations in the test folder
+    bayespam.list_dirs(test_path)
 
     # Parse the messages in the regular message directory
+    ## Store the sum of total regular words
     n_words_regular = bayespam.read_messages(MessageType.REGULAR)
     # Parse the messages in the spam message directory
+    ## Store the sum of total spam words
     n_words_spam = bayespam.read_messages(MessageType.SPAM)
 
-    # bayespam.print_vocab()
-    repertory = bayespam.write_vocab(destination_fp="vocab.txt", n_regular=n_words_regular, n_spam=n_words_spam)
-
-    print("N regular messages: ", len(bayespam.regular_list))
-    print("N spam messages: ", len(bayespam.spam_list))
-    total = len(bayespam.regular_list) + len(bayespam.spam_list)
-    print("Total amount of massages", total)
-    print("Probability for regular", len(bayespam.regular_list) / total)
-    print("Probability for spam", len(bayespam.spam_list) / total)
-    print("Sum of total regular words in the vocabulary ", n_words_regular)
-    print("Sum of total regular words in the vocabulary ", n_words_spam)
+    ## Compute the number of regular mail messages
+    n_regular_messages = len(bayespam.regular_list)
+    ## Compute the number of spam mail messages
+    n_spam_messages = len(bayespam.spam_list)
+    ## Compute the total number of messages
+    total = n_regular_messages + n_spam_messages
+    ## Compute the probability that a message is regular
+    message_regular = n_regular_messages / total
+    ## Compute the probability that a message is spam
+    message_spam = n_spam_messages / total
+    ## Write each word and their occurrence in both spam and regular mail
+    ## Store the conditional probability that a word is in either spam or regular mail in a dict
+    conditional_probabilities = bayespam.write_vocab(destination_fp="vocab.txt", n_regular=n_words_regular,
+                                                     n_spam=n_words_spam)
+    # Prompt the program in classifying the testing set and store its answers in the results list
+    results = test_data(conditional_probabilities, log10(message_regular), log10(message_spam))
 
     """
     Now, implement the follow code yourselves:
-    1) A priori class probabilities must be computed from the number of regular and spam messages
-    2) The vocabulary must be clean: punctuation and digits must be removed, case insensitive
-    3) Conditional probabilities must be computed for every word
-    4) Zero probabilities must be replaced by a small estimated value
     5) Bayes rule must be applied on new messages, followed by argmax classification
     6) Errors must be computed on the test set (FAR = false accept rate (misses), FRR = false reject rate (false alarms))
     7) Improve the code and the performance (speed, accuracy)
