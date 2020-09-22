@@ -1,7 +1,7 @@
 import argparse
 import os
-import re
 import string
+import re
 
 from enum import Enum
 
@@ -98,7 +98,8 @@ class Bayespam():
                         token = split_line[idx]
                         # remove punctuations, convert characters to lower case and remove digits
                         token = "".join([char.lower() for char in token if char not in string.punctuation
-                                         and not char.isdigit()])
+                                         and not char.isdigit() and not re.search("[\\\\\s]", token)])
+                        token = ' '.join(word for word in token.split() if len(word) > 4)
                         if token in self.vocab.keys():
                             # If the token is already in the vocab, retrieve its counter
                             counter = self.vocab[token]
@@ -144,7 +145,7 @@ class Bayespam():
             for word, counter in vocab.items():
                 # repr(word) makes sure that special  characters such as \t (tab) and \n (newline) are printed.
                 f.write("%s | In regular: %d | In spam: %d\n" % (
-                repr(word), counter.counter_regular, counter.counter_spam), )
+                    repr(word), counter.counter_regular, counter.counter_spam), )
 
             f.close()
         except Exception as e:
