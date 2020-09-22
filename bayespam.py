@@ -101,19 +101,16 @@ class Bayespam():
                         ## Convert characters to lower case, remove punctuations, and remove digits
                         token = "".join([char.lower() for char in token if char not in string.punctuation
                                          and not char.isdigit() and not re.search("[\\\\\s]", token)])
-                        ## Remove any words with fewer than four letters
-                        token = '' if len(token) < 4 else token
                         if token in self.vocab.keys():
                             # If the token is already in the vocab, retrieve its counter
                             counter = self.vocab[token]
                         else:
                             # Else: initialize a new counter
                             counter = Counter()
-
                         # Increment the token's counter by one and store in the vocab
                         counter.increment_counter(message_type)
-                        ## If the token is empty, we don't add it, else it will return true if it is non-empty
-                        if token:
+                        ## Ensure we only add words with at least four letters
+                        if len(token) >= 4:
                             total += 1
                             self.vocab[token] = counter
 
