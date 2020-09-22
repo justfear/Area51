@@ -110,7 +110,9 @@ class Bayespam():
 
                         # Increment the token's counter by one and store in the vocab
                         counter.increment_counter(message_type)
-                        self.vocab[token] = counter
+                        if token:
+                            self.vocab[token] = counter
+
             except Exception as e:
                 print("Error while reading message %s: " % msg, e)
                 exit()
@@ -181,6 +183,8 @@ def main():
 
     print("N regular messages: ", len(bayespam.regular_list))
     print("N spam messages: ", len(bayespam.spam_list))
+
+
 
     """
     Now, implement the follow code yourselves:
