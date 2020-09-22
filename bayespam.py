@@ -3,9 +3,11 @@ import os
 
 from enum import Enum
 
+
 class MessageType(Enum):
     REGULAR = 1,
     SPAM = 2
+
 
 class Counter():
 
@@ -24,6 +26,7 @@ class Counter():
             self.counter_regular += 1
         else:
             self.counter_spam += 1
+
 
 class Bayespam():
 
@@ -136,12 +139,12 @@ class Bayespam():
 
             for word, counter in vocab.items():
                 # repr(word) makes sure that special  characters such as \t (tab) and \n (newline) are printed.
-                f.write("%s | In regular: %d | In spam: %d\n" % (repr(word), counter.counter_regular, counter.counter_spam),)
+                f.write("%s | In regular: %d | In spam: %d\n" % (
+                repr(word), counter.counter_regular, counter.counter_spam), )
 
             f.close()
         except Exception as e:
             print("An error occurred while writing the vocab to a file: ", e)
-
 
 
 def main():
@@ -168,7 +171,7 @@ def main():
     bayespam.read_messages(MessageType.SPAM)
 
     # bayespam.print_vocab()
-    # bayespam.write_vocab("vocab.txt")
+    bayespam.write_vocab("vocab.txt")
 
     print("N regular messages: ", len(bayespam.regular_list))
     print("N spam messages: ", len(bayespam.spam_list))
@@ -185,6 +188,7 @@ def main():
     
     Use the same steps to create a class BigramBayespam which implements a classifier using a vocabulary consisting of bigrams
     """
+
 
 if __name__ == "__main__":
     main()
