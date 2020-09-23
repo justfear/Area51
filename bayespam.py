@@ -205,7 +205,7 @@ class Bayespam():
                         repr(word), counter.counter_regular, counter.counter_spam), )
                     ## If we have a 0 probability, replace it with an estimate
                     if counter.counter_regular == 0:
-                        conditional_regular = 0.00000000001 / total_words
+                        conditional_regular = / total_words
                         conditional_spam = counter.counter_spam / self.n_words_spam
                     elif counter.counter_spam == 0:
                         conditional_regular = counter.counter_regular / self.n_words_regular
@@ -277,8 +277,10 @@ def main():
     ## Compute the total number of messages
     total = n_regular_messages + n_spam_messages
     ## Compute the (log) probability that a message is regular
+    print("Probability regular ", n_regular_messages / total)
     bayespam.probability_regular = log10(n_regular_messages / total)
     ## Compute the (log) probability that a message is spam
+    print("Probability spam ", n_spam_messages / total)
     bayespam.probability_spam = log10(n_spam_messages / total)
     ## Write each word and their occurrence in both spam and regular mail
     ## Store the conditional probability that a word is in either spam or regular mail in a dict
@@ -294,6 +296,7 @@ def main():
     regular_f = bayespam.regular_results.count(False)
     spam_t = bayespam.spam_results.count(True)
     spam_f = bayespam.spam_results.count(False)
+
 
     print("                   Predicted regular             Predicted spam\n")
     print("Actually Regular:   ", regular_f,"                       ",regular_t, "\n")
