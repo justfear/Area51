@@ -152,6 +152,8 @@ class Bayespam():
                 else:
                     self.results[1][msg_index] = False
             msg_index += 1
+            probability_spam = self.probability_spam
+            probability_regular = self.probability_regular
 
     def print_vocab(self):
         """
@@ -201,6 +203,7 @@ class Bayespam():
                     else:
                         conditional_regular = counter.counter_regular / self.n_words_regular
                         conditional_spam = counter.counter_spam / self.n_words_spam
+                    ## Add the regular and spam conditional probabilities to the dict
                     conditional_probabilities[word]['regular'] = conditional_regular
                     conditional_probabilities[word]['spam'] = conditional_spam
                 f.close()
@@ -210,9 +213,11 @@ class Bayespam():
         return conditional_probabilities
 
     def test_data(self):
-
+        ## Read and evaluate the regular test messages (testing mode: on)
         self.read_messages(MessageType.REGULAR, True)
+        ## Read and evaluate the spam test messages (testing mode: on)
         self.read_messages(MessageType.SPAM, True)
+        ## Compute the confusion matrix from the results
 
 
 def is_spam(probability_regular, probability_spam):
@@ -265,14 +270,13 @@ def main():
     bayespam.probability_spam = log10(n_spam_messages / total)
     ## Write each word and their occurrence in both spam and regular mail
     ## Store the conditional probability that a word is in either spam or regular mail in a dict
-    conditional_probabilities = bayespam.write_vocab(destination_fp="vocab.txt")
+    bayespam.conditional_probabilities = bayespam.write_vocab(destination_fp="vocab.txt")
 
     ## Initialize a list of the regular and spam message locations in the test folder
     bayespam.list_dirs(test_path)
 
     ## Prompt the program in classifying the testing set for both spam and regular messages
-    ## Store respective results in lists
-    test_results = bayespam.test_data()
+    bayespam.test_data()
 
     """
     Now, implement the follow code yourselves:
