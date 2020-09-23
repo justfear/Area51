@@ -114,7 +114,7 @@ class Bayespam():
                             token = split_line[idx]
                             ## Convert characters to lower case, remove punctuations, and remove digits
                             token = "".join([char.lower() for char in token if char not in string.punctuation
-                                             and not char.isdigit() and not re.search("[\\\\\s]", token)])
+                                             and not char.isdigit() and not re.search("[\\\\\\n]", token)])
                             ## Ensure we only add words with at least four letters
                             if len(token) >= 4:
                                 ## Ensure the algorithm only learns when training.
