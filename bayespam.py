@@ -37,7 +37,8 @@ class Bayespam():
     def __init__(self):
         self.regular_list = None
         self.spam_list = None
-        self.results = None
+        self.regular_results = []
+        self.spam_results = []
         self.n_words_regular = 0
         self.n_words_spam = 0
         self.probability_regular = 0
@@ -143,14 +144,14 @@ class Bayespam():
                 exit()
             if is_spam(probability_regular, probability_spam):
                 if message_type == MessageType.REGULAR:
-                    self.results[0][msg_index] = True
+                    self.regular_results.insert(msg_index, True)
                 else:
-                    self.results[1][msg_index] = True
+                    self.spam_results.insert(msg_index, True)
             else:
                 if message_type == MessageType.REGULAR:
-                    self.results[0][msg_index] = False
+                    self.regular_results.insert(msg_index, False)
                 else:
-                    self.results[1][msg_index] = False
+                    self.spam_results.insert(msg_index, False)
             msg_index += 1
             probability_spam = self.probability_spam
             probability_regular = self.probability_regular
@@ -277,6 +278,7 @@ def main():
 
     ## Prompt the program in classifying the testing set for both spam and regular messages
     bayespam.test_data()
+
 
     """
     Now, implement the follow code yourselves:
