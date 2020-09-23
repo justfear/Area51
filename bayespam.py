@@ -236,7 +236,6 @@ def is_spam(probability_regular, probability_spam):
     return probability_spam > probability_regular
 
 
-
 def main():
     # We require the file paths of the training and test sets as input arguments (in that order)
     # The argparse library helps us cleanly parse input arguments
@@ -291,19 +290,21 @@ def main():
     spam_t = bayespam.spam_results.count(True)
     spam_f = bayespam.spam_results.count(False)
 
-
     print("                   Predicted regular             Predicted spam\n")
-    print("Actually Regular:   ", regular_f,"                       ",regular_t, "\n")
-    print("Actually Spam:      ", spam_f,"                      ",spam_t, "\n")
-    print("Accuracy rate: ", 100 * (regular_f + spam_t) / (regular_f + regular_t + spam_t + spam_f), "%")
+    print("Actually Regular:   ", regular_f, "                       ", regular_t, "\n")
+    print("Actually Spam:      ", spam_f, "                      ", spam_t, "\n")
+    print(" False accept rate: ", 100 * spam_f / (regular_f + regular_t + spam_t + spam_f), "%")
+    print(" False reject rate: ", 100 * regular_t / (regular_f + regular_t + spam_t + spam_f), "%")
+    print(" Total Accuracy rate: ", 100 * (regular_f + spam_t) / (regular_f + regular_t + spam_t + spam_f), "%")
 
     """
     Now, implement the follow code yourselves:
-    5) Bayes rule must be applied on new messages, followed by argmax classification
     6) Errors must be computed on the test set (FAR = false accept rate (misses), FRR = false reject rate (false alarms))
     7) Improve the code and the performance (speed, accuracy)
     
     Use the same steps to create a class BigramBayespam which implements a classifier using a vocabulary consisting of bigrams
     """
+
+
 if __name__ == "__main__":
     main()
