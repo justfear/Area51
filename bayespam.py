@@ -142,8 +142,8 @@ class Bayespam():
                                     if token in self.vocab:
                                         ## If token is in the vocab, then multiply its conditional probability to the
                                         ## other two respective probabilities (logP(Regular), logP(Spam)
-                                        probability_regular *= log10(self.conditional_probabilities[token]['regular'])
-                                        probability_spam *= log10(self.conditional_probabilities[token]['spam'])
+                                        probability_regular += log10(self.conditional_probabilities[token]['regular'])
+                                        probability_spam += log10(self.conditional_probabilities[token]['spam'])
                     f.close()
             except Exception as e:
                 print("Error while reading message %s: " % msg, e)
@@ -205,11 +205,11 @@ class Bayespam():
                         repr(word), counter.counter_regular, counter.counter_spam), )
                     ## If we have a 0 probability, replace it with an estimate
                     if counter.counter_regular == 0:
-                        conditional_regular = / total_words
+                        conditional_regular = 0.001 / total_words
                         conditional_spam = counter.counter_spam / self.n_words_spam
                     elif counter.counter_spam == 0:
                         conditional_regular = counter.counter_regular / self.n_words_regular
-                        conditional_spam = 0.000000000001 / total_words
+                        conditional_spam = 0.001 / total_words
                     ## Else compute the conditional probabilities normally
                     else:
                         conditional_regular = counter.counter_regular / self.n_words_regular
@@ -300,7 +300,7 @@ def main():
 
     print("                   Predicted regular             Predicted spam\n")
     print("Actually Regular:   ", regular_f,"                       ",regular_t, "\n")
-    print("Actually Spam:      ", spam_f   ,"                      ",spam_t, "\n")
+    print("Actually Spam:      ", spam_f,"                      ",spam_t, "\n")
     print("Accuracy rate: ", 100 * (regular_f + spam_t) / (regular_f + regular_t + spam_t + spam_f), "%")
 
     """
