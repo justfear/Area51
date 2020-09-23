@@ -298,6 +298,7 @@ def main():
     print("                   Predicted regular             Predicted spam\n")
     print("Actually Regular:   ", regular_f,"                       ",regular_t, "\n")
     print("Actually Spam:      ", spam_f   ,"                      ",spam_t, "\n")
+    print("Accuracy rate: ", (regular_f + spam_t) / (regular_f + regular_t + spam_t + spam_f), "%")
 
     """
     Now, implement the follow code yourselves:
