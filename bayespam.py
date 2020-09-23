@@ -135,13 +135,18 @@ class Bayespam():
                                     counter.increment_counter(message_type)
                                     self.vocab[token] = counter
                                 else:
+                                    ## If testing, check that the token is in the vocab
                                     if token in self.vocab:
+                                        ## If token is in the vocab, then multiply its conditional probability to the
+                                        ## other two respective probabilities (logP(Regular), logP(Spam)
                                         probability_regular *= log10(self.conditional_probabilities[token]['regular'])
                                         probability_spam *= log10(self.conditional_probabilities[token]['spam'])
                     f.close()
             except Exception as e:
                 print("Error while reading message %s: " % msg, e)
                 exit()
+            ## Compare P(regular|msg) vs P(spam|msg)
+            ## If P(spam|msg) > P(regular|msg) then we add the value True to the correct list depending on message type
             if is_spam(probability_regular, probability_spam):
                 if message_type == MessageType.REGULAR:
                     self.regular_results.insert(msg_index, True)
@@ -152,7 +157,9 @@ class Bayespam():
                     self.regular_results.insert(msg_index, False)
                 else:
                     self.spam_results.insert(msg_index, False)
+            ## Increment msg_index by one to differentate between messages
             msg_index += 1
+            ## Reset the two probability variables to the original logP(Regular) and logP(Spam)
             probability_spam = self.probability_spam
             probability_regular = self.probability_regular
 
@@ -229,7 +236,7 @@ def is_spam(probability_regular, probability_spam):
     :param probability_spam: The number of occurrences of spam words
     :return: True if the computed probabilities point to a spam mail, False if they point to a regular mail
     """
-    return True if probability_spam > probability_regular else False
+    return probability_spam > probability_regular
 
 
 def main():
@@ -278,7 +285,6 @@ def main():
 
     ## Prompt the program in classifying the testing set for both spam and regular messages
     bayespam.test_data()
-
 
     """
     Now, implement the follow code yourselves:
