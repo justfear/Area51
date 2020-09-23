@@ -297,7 +297,7 @@ def main():
 
     print("                   Predicted regular             Predicted spam\n")
     print("Actually Regular:   ", regular_f,"                       ",regular_t, "\n")
-    print("Actually Spam:      ", spam_f   ,"                     ",spam_t, "\n")
+    print("Actually Spam:      ", spam_f   ,"                      ",spam_t, "\n")
 
     """
     Now, implement the follow code yourselves:
