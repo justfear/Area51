@@ -114,7 +114,7 @@ class Bayespam():
                             token = split_line[idx]
                             ## Convert characters to lower case, remove punctuations, and remove digits
                             token = "".join([char.lower() for char in token if char not in string.punctuation
-                                             and not char.isdigit() and not re.search("[\\\\\\s]", token)])
+                                             and not char.isdigit() and not re.search("[\\\\\\n\\t]", token)])
                             ## Encode to ascii and decode to utf-8 to remove hexadecimal numbers
                             token = token.encode('ascii', errors='ignore')
                             token = token.decode('utf-8')
@@ -150,16 +150,10 @@ class Bayespam():
                 exit()
             ## Compare P(regular|msg) vs P(spam|msg)
             ## If P(spam|msg) > P(regular|msg) then we add the value True to the correct list depending on message type
-            if is_spam(probability_regular, probability_spam):
-                if message_type == MessageType.REGULAR:
-                    self.regular_results.insert(msg_index, True)
-                else:
-                    self.spam_results.insert(msg_index, True)
+            if message_type == MessageType.REGULAR:
+                self.regular_results.insert(msg_index, is_spam(probability_regular, probability_spam))
             else:
-                if message_type == MessageType.REGULAR:
-                    self.regular_results.insert(msg_index, False)
-                else:
-                    self.spam_results.insert(msg_index, False)
+                self.spam_results.insert(msg_index, is_spam(probability_regular, probability_spam))
             ## Increment msg_index by one to differentate between messages
             msg_index += 1
             ## Reset the two probability variables to the original logP(Regular) and logP(Spam)
@@ -205,11 +199,11 @@ class Bayespam():
                         repr(word), counter.counter_regular, counter.counter_spam), )
                     ## If we have a 0 probability, replace it with an estimate
                     if counter.counter_regular == 0:
-                        conditional_regular = 0.001 / total_words
+                        conditional_regular = 0.05 / total_words
                         conditional_spam = counter.counter_spam / self.n_words_spam
                     elif counter.counter_spam == 0:
                         conditional_regular = counter.counter_regular / self.n_words_regular
-                        conditional_spam = 0.001 / total_words
+                        conditional_spam = 0.05 / total_words
                     ## Else compute the conditional probabilities normally
                     else:
                         conditional_regular = counter.counter_regular / self.n_words_regular
@@ -255,8 +249,6 @@ def main():
 
     # Read the file path of the folder containing the training set from the input arguments
     train_path = args.train_path
-    ## Read the file path of the folder containing the test set from the input arguments
-    test_path = args.test_path
 
     # Initialize a Bayespam object
     bayespam = Bayespam()
@@ -286,6 +278,8 @@ def main():
     ## Store the conditional probability that a word is in either spam or regular mail in a dict
     bayespam.conditional_probabilities = bayespam.write_vocab(destination_fp="vocab.txt")
 
+    ## Read the file path of the folder containing the test set from the input arguments
+    test_path = args.test_path
     ## Initialize a list of the regular and spam message locations in the test folder
     bayespam.list_dirs(test_path)
 
