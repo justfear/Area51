@@ -122,8 +122,8 @@ class Bayespam():
                             if len(token) >= 4:
                                 ## Ensure the algorithm only learns when training.
                                 ## Can allow it to learn while testing but would require supervision
+                                ## Increase the count of regular words or spam words, depending on message type
                                 if not testing:
-                                    ## Increase the count of regular words or spam words, depending on message type
                                     if message_type == MessageType.REGULAR:
                                         self.n_words_regular += 1
                                     elif message_type == MessageType.SPAM:
@@ -149,11 +149,12 @@ class Bayespam():
                 print("Error while reading message %s: " % msg, e)
                 exit()
             ## Compare P(regular|msg) vs P(spam|msg)
-            ## If P(spam|msg) > P(regular|msg) then we add the value True to the correct list depending on message type
-            if message_type == MessageType.REGULAR:
-                self.regular_results.insert(msg_index, is_spam(probability_regular, probability_spam))
-            else:
-                self.spam_results.insert(msg_index, is_spam(probability_regular, probability_spam))
+            if testing:
+                ## If P(spam|msg) > P(regular|msg) then we add the value True to the correct list depending on message type
+                if message_type == MessageType.REGULAR:
+                    self.regular_results.insert(msg_index, is_spam(probability_regular, probability_spam))
+                else:
+                    self.spam_results.insert(msg_index, is_spam(probability_regular, probability_spam))
             ## Increment msg_index by one to differentate between messages
             msg_index += 1
             ## Reset the two probability variables to the original logP(Regular) and logP(Spam)
@@ -222,7 +223,6 @@ class Bayespam():
         self.read_messages(MessageType.REGULAR, True)
         ## Read and evaluate the spam test messages (testing mode: on)
         self.read_messages(MessageType.SPAM, True)
-        ## Compute the confusion matrix from the results
 
 
 def is_spam(probability_regular, probability_spam):
