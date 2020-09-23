@@ -296,8 +296,8 @@ def main():
     spam_f = bayespam.spam_results.count(False)
 
     print("                   Predicted regular             Predicted spam\n")
-    print("Actually Yes:     ", regular_t,"                           ",spam_t, "\n")
-    print("Actually No:      ", regular_f,"                          ",spam_f, "\n")
+    print("Actually Regular:   ", regular_f,"                       ",regular_t, "\n")
+    print("Actually Spam:      ", spam_f   ,"                     ",spam_t, "\n")
 
     """
     Now, implement the follow code yourselves:
