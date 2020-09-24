@@ -241,8 +241,8 @@ class Bayespam:
         print(" Predicted Values  |____________________________________________|")
         print(" Positive (spam)   | ", regular_f, "                    ", regular_t)
         print(" Negative (regular)| ", spam_f, "                    ", spam_t)
-        print(" False accept rate: ", 100 * spam_f / (regular_f + regular_t + spam_t + spam_f), "%")
-        print(" False reject rate: ", 100 * regular_t / (regular_f + regular_t + spam_t + spam_f), "%")
+        print(" False accept rate: ", 100 * spam_f / (regular_f + regular_t + spam_t + spam_f), "%",
+              " False reject rate: ", 100 * regular_t / (regular_f + regular_t + spam_t + spam_f), "%")
         print(" Total Accuracy rate: ", 100 * (regular_f + spam_t) / (regular_f + regular_t + spam_t + spam_f), "%")
 
 
