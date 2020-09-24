@@ -239,10 +239,10 @@ class Bayespam:
         print("                   |        Actual Values                       |")
         print("                   |  Positive (spam)         Negative (regular)|")
         print(" Predicted Values  |____________________________________________|")
-        print(" Positive (spam)   | ", spam_t, "                    ", regular_t)
-        print(" Negative (regular)| ", spam_f, "                    ", regular_f)
-        print(" False accept rate: ", 100 * spam_f / (regular_f + regular_t + spam_t + spam_f), "%",
-              " False reject rate: ", 100 * regular_t / (regular_f + regular_t + spam_t + spam_f), "%")
+        print(" Positive (spam)   | ", spam_t, "                    ", regular_t, "                |")
+        print(" Negative (regular)| ", spam_f, "                    ", regular_f, "                |")
+        print(" False accept rate:", 100 * spam_f / (regular_f + regular_t + spam_t + spam_f), "%  –– ",
+              " False reject rate:", 100 * regular_t / (regular_f + regular_t + spam_t + spam_f), "%")
         print(" Total Accuracy rate: ", 100 * (regular_f + spam_t) / (regular_f + regular_t + spam_t + spam_f), "%")
 
     def compute_probabilities(self):
