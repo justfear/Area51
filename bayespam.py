@@ -286,16 +286,14 @@ def main():
     bayespam.read_messages(MessageType.SPAM)
     ## Compute probability of spam and regular messages
     bayespam.compute_probabilities()
-
+    #USELESSCOMMENT
     ## Write each word and their occurrence in both spam and regular mail
     ## Store the conditional probability that a word is in either spam or regular mail in a dict
     bayespam.conditional_probabilities = bayespam.write_vocab(destination_fp="vocab.txt")
-
     ## Read the file path of the folder containing the test set from the input arguments
     test_path = args.test_path
     ## Initialize a list of the regular and spam message locations in the test folder
     bayespam.list_dirs(test_path)
-
     ## Prompt the program in classifying the testing set for both spam and regular messages
     bayespam.test_data()
 
