@@ -293,17 +293,8 @@ def main():
     ## Prompt the program in classifying the testing set for both spam and regular messages
     bayespam.test_data()
 
-    regular_t = bayespam.regular_results.count(True)
-    regular_f = bayespam.regular_results.count(False)
-    spam_t = bayespam.spam_results.count(True)
-    spam_f = bayespam.spam_results.count(False)
 
-    print("                   Predicted regular             Predicted spam\n")
-    print("Actually Regular:   ", regular_f, "                       ", regular_t, "\n")
-    print("Actually Spam:      ", spam_f, "                        ", spam_t, "\n")
-    print(" False accept rate: ", 100 * spam_f / (regular_f + regular_t + spam_t + spam_f), "%")
-    print(" False reject rate: ", 100 * regular_t / (regular_f + regular_t + spam_t + spam_f), "%")
-    print(" Total Accuracy rate: ", 100 * (regular_f + spam_t) / (regular_f + regular_t + spam_t + spam_f), "%")
+    bayespam.confusion_matrix()
 
     """
     Now, implement the follow code yourselves:
