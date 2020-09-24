@@ -178,10 +178,7 @@ class Bayespam:
 
         :param destination_fp: Destination file path of the vocabulary file
         :param sort_by_freq: Set to True to sort the vocab by total frequency (descending order)
-        :return: A 2-D dict containing all words as entries and their conditional probabilities (regular and spam)
         """
-        ## Initialize a nested dict (2-Dimensional dict) using the defaultdict() function
-        conditional_probabilities = defaultdict(dict)
 
         if sort_by_freq:
             vocab = sorted(self.vocab.items(), key=lambda x: x[1].counter_regular + x[1].counter_spam, reverse=True)
@@ -207,13 +204,11 @@ class Bayespam:
                         conditional_regular = counter.counter_regular / self.n_words_regular
                         conditional_spam = counter.counter_spam / self.n_words_spam
                     ## Add the regular and spam conditional probabilities to the dict
-                    conditional_probabilities[word]['regular'] = conditional_regular
-                    conditional_probabilities[word]['spam'] = conditional_spam
+                    self.conditional_probabilities[word]['regular'] = conditional_regular
+                    self.conditional_probabilities[word]['spam'] = conditional_spam
                 f.close()
         except Exception as e:
             print("An error occurred while writing the vocab to a file: ", e)
-
-        return conditional_probabilities
 
     def train_data(self, train_path):
         """
@@ -234,7 +229,7 @@ class Bayespam:
         self.read_messages(MessageType.SPAM)
         ## Write each word and their occurrence in both spam and regular mail onto a text file,
         ##  and store the conditional probability that a word is in either spam or regular mail in a dict
-        self.conditional_probabilities = self.write_vocab(destination_fp="vocab.txt")
+        self.write_vocab(destination_fp="vocab.txt")
 
     def test_data(self, test_path):
         """

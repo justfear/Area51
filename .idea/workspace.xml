@@ -10,9 +10,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0f333a50-0828-480e-971b-73bbcb6bf2e7" name="Default Changelist" comment="Comitting">
+    <list default="true" id="0f333a50-0828-480e-971b-73bbcb6bf2e7" name="Default Changelist" comment="Finishing touches">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bayespam.py" beforeDir="false" afterPath="$PROJECT_DIR$/bayespam.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -336,7 +335,14 @@
       <option name="project" value="LOCAL" />
       <updated>1600957316600</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Finishing touches">
+      <created>1600959949407</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1600959949407</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -369,7 +375,8 @@
     <MESSAGE value="Add confusion matrix" />
     <MESSAGE value="Comitting trash for zhenya" />
     <MESSAGE value="Comitting" />
-    <option name="LAST_COMMIT_MESSAGE" value="Comitting" />
+    <MESSAGE value="Finishing touches" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finishing touches" />
   </component>
   <component name="WindowStateProjectService">
     <state x="510" y="254" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600800277586">
@@ -384,10 +391,10 @@
       <screen x="0" y="23" width="1440" height="852" />
     </state>
     <state x="361" y="214" key="MultipleFileMergeDialog/0.23.1440.852@0.23.1440.852" timestamp="1600956939427" />
-    <state x="320" y="185" key="Vcs.Push.Dialog.v2" timestamp="1600957318039">
+    <state x="320" y="185" key="Vcs.Push.Dialog.v2" timestamp="1600959952454">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
-    <state x="320" y="185" key="Vcs.Push.Dialog.v2/0.23.1440.852@0.23.1440.852" timestamp="1600957318039" />
+    <state x="320" y="185" key="Vcs.Push.Dialog.v2/0.23.1440.852@0.23.1440.852" timestamp="1600959952454" />
     <state x="523" y="366" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1600956966963">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
