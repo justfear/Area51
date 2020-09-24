@@ -236,11 +236,11 @@ class Bayespam:
         ## Count the number of False Negatives (FNs)
         spam_f = self.spam_results.count(False)
 
-        print("                  |        Actual Values                       |")
-        print("                  |  Positive (spam)         Negative (regular)|")
-        print("Predicted Values  |____________________________________________|")
-        print("Positive (spam)   | ", regular_f, "                    ", regular_t)
-        print("Negative (regular)| ", spam_f, "                    ", spam_t)
+        print("                   |        Actual Values                       |")
+        print("                   |  Positive (spam)         Negative (regular)|")
+        print(" Predicted Values  |____________________________________________|")
+        print(" Positive (spam)   | ", regular_f, "                    ", regular_t)
+        print(" Negative (regular)| ", spam_f, "                    ", spam_t)
         print(" False accept rate: ", 100 * spam_f / (regular_f + regular_t + spam_t + spam_f), "%")
         print(" False reject rate: ", 100 * regular_t / (regular_f + regular_t + spam_t + spam_f), "%")
         print(" Total Accuracy rate: ", 100 * (regular_f + spam_t) / (regular_f + regular_t + spam_t + spam_f), "%")
@@ -295,7 +295,7 @@ def main():
     ## Prompt the program in classifying the testing set for both spam and regular messages
     bayespam.test_data()
 
-    ## Create and print the confusion matrix of
+    ## Create and print a confusion matrix
     bayespam.confusion_matrix()
 
 
