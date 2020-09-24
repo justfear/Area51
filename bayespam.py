@@ -296,14 +296,6 @@ def main():
 
     bayespam.confusion_matrix()
 
-    """
-    Now, implement the follow code yourselves:
-    6) Errors must be computed on the test set (FAR = false accept rate (misses), FRR = false reject rate (false alarms))
-    7) Improve the code and the performance (speed, accuracy)
-    
-    Use the same steps to create a class BigramBayespam which implements a classifier using a vocabulary consisting of bigrams
-    """
-
 
 if __name__ == "__main__":
     main()
