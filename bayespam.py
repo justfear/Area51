@@ -292,7 +292,7 @@ def main():
 
     print("                   Predicted regular             Predicted spam\n")
     print("Actually Regular:   ", regular_f, "                       ", regular_t, "\n")
-    print("Actually Spam:      ", spam_f, "                      ", spam_t, "\n")
+    print("Actually Spam:      ", spam_f, "                        ", spam_t, "\n")
     print(" False accept rate: ", 100 * spam_f / (regular_f + regular_t + spam_t + spam_f), "%")
     print(" False reject rate: ", 100 * regular_t / (regular_f + regular_t + spam_t + spam_f), "%")
     print(" Total Accuracy rate: ", 100 * (regular_f + spam_t) / (regular_f + regular_t + spam_t + spam_f), "%")
