@@ -152,9 +152,9 @@ class Bayespam():
             if testing:
                 ## If P(spam|msg) > P(regular|msg) then we add the value True to the correct list depending on message type
                 if message_type == MessageType.REGULAR:
-                    self.regular_results.insert(msg_index, is_spam(probability_regular, probability_spam))
+                    self.regular_results.insert(msg_index, probability_regular < probability_spam)
                 else:
-                    self.spam_results.insert(msg_index, is_spam(probability_regular, probability_spam))
+                    self.spam_results.insert(msg_index, probability_regular < probability_spam)
             ## Increment msg_index by one to differentate between messages
             msg_index += 1
             ## Reset the two probability variables to the original logP(Regular) and logP(Spam)
@@ -224,16 +224,24 @@ class Bayespam():
         ## Read and evaluate the spam test messages (testing mode: on)
         self.read_messages(MessageType.SPAM, True)
 
+    def confusion_matrix(self):
 
-def is_spam(probability_regular, probability_spam):
-    """
-    Checks whether a given message is spam or regular through probability comparison.
+        ## We regard a true positive as the program correctly identifying a spam mail
+        ## Count the number of False Positives (FPs)
+        regular_t = self.regular_results.count(True)
+        ## Count the number of True Negatives (TNs)
+        regular_f = self.regular_results.count(False)
+        ## Count the number of True Positives (TPs)
+        spam_t = self.spam_results.count(True)
+        ## Count the number of False Negatives (FNs)
+        spam_f = self.spam_results.count(False)
 
-    :param probability_regular: The number of occurrences of regular words
-    :param probability_spam: The number of occurrences of spam words
-    :return: True if the computed probabilities point to a spam mail, False if they point to a regular mail
-    """
-    return probability_spam > probability_regular
+        print("                   Predicted regular             Predicted spam\n")
+        print("Actually Regular:   ", regular_f, "                       ", regular_t, "\n")
+        print("Actually Spam:      ", spam_f, "                        ", spam_t, "\n")
+        print(" False accept rate: ", 100 * spam_f / (regular_f + regular_t + spam_t + spam_f), "%")
+        print(" False reject rate: ", 100 * regular_t / (regular_f + regular_t + spam_t + spam_f), "%")
+        print(" Total Accuracy rate: ", 100 * (regular_f + spam_t) / (regular_f + regular_t + spam_t + spam_f), "%")
 
 
 def main():
