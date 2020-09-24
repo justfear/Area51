@@ -245,6 +245,20 @@ class Bayespam:
         print(" False reject rate: ", 100 * regular_t / (regular_f + regular_t + spam_t + spam_f), "%")
         print(" Total Accuracy rate: ", 100 * (regular_f + spam_t) / (regular_f + regular_t + spam_t + spam_f), "%")
 
+    def compute_probabilities(self):
+        ## Compute the number of regular mail messages
+        n_regular_messages = len(self.regular_list)
+        ## Compute the number of spam mail messages
+        n_spam_messages = len(self.spam_list)
+        ## Compute the total number of messages
+        total = n_regular_messages + n_spam_messages
+        ## Compute the (log) probability that a message is regular
+        print("Probability regular ", n_regular_messages / total)
+        self.probability_regular = log10(n_regular_messages / total)
+        ## Compute the (log) probability that a message is spam
+        print("Probability spam ", n_spam_messages / total)
+        self.probability_spam = log10(n_spam_messages / total)
+
 
 def main():
     # We require the file paths of the training and test sets as input arguments (in that order)
@@ -270,19 +284,9 @@ def main():
     # Parse the messages in the spam message directory
     ## Store the sum of total spam words
     bayespam.read_messages(MessageType.SPAM)
+    ## Compute probability of spam and regular messages
+    bayespam.compute_probabilities()
 
-    ## Compute the number of regular mail messages
-    n_regular_messages = len(bayespam.regular_list)
-    ## Compute the number of spam mail messages
-    n_spam_messages = len(bayespam.spam_list)
-    ## Compute the total number of messages
-    total = n_regular_messages + n_spam_messages
-    ## Compute the (log) probability that a message is regular
-    print("Probability regular ", n_regular_messages / total)
-    bayespam.probability_regular = log10(n_regular_messages / total)
-    ## Compute the (log) probability that a message is spam
-    print("Probability spam ", n_spam_messages / total)
-    bayespam.probability_spam = log10(n_spam_messages / total)
     ## Write each word and their occurrence in both spam and regular mail
     ## Store the conditional probability that a word is in either spam or regular mail in a dict
     bayespam.conditional_probabilities = bayespam.write_vocab(destination_fp="vocab.txt")
