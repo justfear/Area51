@@ -194,11 +194,11 @@ class Bayespam:
                         repr(word), counter.counter_regular, counter.counter_spam), )
                     ## If we have a 0 probability, replace it with an estimate
                     if counter.counter_regular == 0:
-                        conditional_regular = 0.05 / (self.n_words_spam + self.n_words_regular)
+                        conditional_regular = 0.01 / (self.n_words_spam + self.n_words_regular)
                         conditional_spam = counter.counter_spam / self.n_words_spam
                     elif counter.counter_spam == 0:
                         conditional_regular = counter.counter_regular / self.n_words_regular
-                        conditional_spam = 0.05 / (self.n_words_spam + self.n_words_regular)
+                        conditional_spam = 0.01 / (self.n_words_spam + self.n_words_regular)
                     ## Else compute the conditional probabilities normally
                     else:
                         conditional_regular = counter.counter_regular / self.n_words_regular
