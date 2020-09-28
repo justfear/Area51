@@ -43,7 +43,7 @@ class Bayespam:
         self.n_words_spam = 0
         self.probability_regular = 0
         self.probability_spam = 0
-        self.conditional_probabilities = {}
+        self.conditional_probabilities = defaultdict(dict)
         self.vocab = {}
 
     def list_dirs(self, path):
@@ -209,6 +209,7 @@ class Bayespam:
                 f.close()
         except Exception as e:
             print("An error occurred while writing the vocab to a file: ", e)
+            exit()
 
     def train_data(self, train_path):
         """
@@ -230,6 +231,7 @@ class Bayespam:
         ## Write each word and their occurrence in both spam and regular mail onto a text file,
         ##  and store the conditional probability that a word is in either spam or regular mail in a dict
         self.write_vocab(destination_fp="vocab.txt")
+
 
     def test_data(self, test_path):
         """
@@ -305,7 +307,6 @@ def main():
 
     # Initialize a Bayespam object
     bayespam = Bayespam()
-
     ## Prompt the program in training itself on the training set
     bayespam.train_data(args.train_path)
 
