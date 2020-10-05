@@ -79,6 +79,6 @@ class KMeans:
                 else:
                     prototypes = list(map(operator.add, prototypes, self.traindata[i]))
                 cluster.current_members.add(i)
-            cluster.prototype = list(map(operator.div, prototypes, random_values[idx] - random_values[idx_prev]))
+            cluster.prototype = [x/(random_values[idx] - random_values[idx_prev]) for x in prototypes]
             idx_prev += 1
             idx += 1
