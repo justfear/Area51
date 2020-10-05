@@ -34,6 +34,7 @@ class KMeans:
         # Step 1: Select an initial random partioning with k clusters
         self.create_random_clusters(-1, 0)
         # Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
+
         # Step 3: recalculate cluster centers
         # Step 4: repeat until cluster membership stabilizes
         pass
@@ -69,7 +70,10 @@ class KMeans:
         random_values.append(len(self.traindata))
         random_values.sort()
         for cluster in self.clusters:
+            sum = 0
             idx_prev += 1
             idx += 1
-            for i in range(random_values[idx_prev], idx):
+            for i in range(random_values[idx_prev], random_values[idx]):
                 cluster.current_members.add(i)
+                sum += self.traindata[i]
+            sum /= len(cluster.current_members)
