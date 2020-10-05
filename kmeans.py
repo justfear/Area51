@@ -32,6 +32,7 @@ class KMeans:
 
     def train(self):
         # Step 1: Select an initial random partioning with k clusters
+        self.create_random_clusters(-1, 0)
         # Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
         # Step 3: recalculate cluster centers
         # Step 4: repeat until cluster membership stabilizes
@@ -64,6 +65,9 @@ class KMeans:
 
     def create_random_clusters(self, idx_prev, idx):
         random_values = random.sample(range(1, len(self.traindata)-1), len(self.clusters))
+        random_values.append(0)
+        random_values.append(len(self.traindata))
+        random_values.sort()
         for cluster in self.clusters:
             idx_prev += 1
             idx += 1
