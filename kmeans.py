@@ -1,7 +1,6 @@
 """kmeans.py"""
 import random
 
-
 class Cluster:
     """This class represents the clusters, it contains the
     prototype (the mean of all it's members) and memberlists with the
@@ -31,16 +30,18 @@ class KMeans:
         self.hitrate = 0
 
     def train(self):
-        # implement k-means algorithm here:
+        print(len(self.clusters))
+        # Generate random points of partition and add 0 and length of training data as point of reference
+        random_values = random.sample(1, len(self.traindata)-1, len(self.clusters)-1)
+        random_values.append(0)
+        random_values.append(len(self.traindata))
+        print(random_values)
+        # Sort each random integer in ascending order
+        random_values.sort()
         # Step 1: Select an initial random partioning with k clusters
-        partition = self.clusters[random.randint(0, len(self.traindata)): random.randint(0, len(self.traindata))]
-        print(partition)
         # Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
-
         # Step 3: recalculate cluster centers
-
-        # Step 4: repeat until clustermembership stabilizes
-
+        # Step 4: repeat until cluster membership stabilizes
         pass
 
     def test(self):
