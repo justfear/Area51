@@ -15,7 +15,7 @@ class Cluster:
         self.prototype = [0.0 for _ in range(dim)]
         self.current_members = set()
         self.previous_members = set()
-
+        self.prototype_start = True
 
 class KMeans:
     def __init__(self, k, traindata, testdata, dim):
@@ -36,7 +36,7 @@ class KMeans:
         # Step 1: Select an initial random partioning with k clusters
         self.create_random_clusters(1)
         # Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
-
+        self.compare_distances()
         # Step 3: recalculate cluster centers
 
         # Step 4: repeat until cluster membership stabilizes
@@ -82,18 +82,17 @@ class KMeans:
         random_values.sort()
 
         for cluster in self.clusters:
-            prototypes = []
             # If we are iterating through the first vector ID in the cluster, make it equal to the prototype variable
             for i in range(random_values[idx - 1], random_values[idx]):
                 if i == random_values[idx - 1]:
-                    prototypes = self.traindata[i]
+                    cluster.prototype = self.traindata[i]
                 # Otherwise add any subsequent vector's elements together
                 else:
-                    prototypes = list(map(operator.add, prototypes, self.traindata[i]))
+                    cluster.prototype = list(map(operator.add, cluster.prototype, self.traindata[i]))
                 # Add the datapoint ID to our cluster's current_members
                 cluster.previous_members.add(i)
             # Compute the mean of each value of all vectors added together in a cluster
-            cluster.prototype = [x / (random_values[idx] - random_values[idx - 1]) for x in prototypes]
+            cluster.prototype = [x / (random_values[idx] - random_values[idx - 1]) for x in cluster.prototype]
             idx += 1
 
     def compare_distances(self):
@@ -102,8 +101,12 @@ class KMeans:
             for cluster in self.clusters:
                 distance_matrix.append(distance(vector, cluster.prototype))
             cluster_idx = distance_matrix.index(max(distance_matrix))
-            vector_idx = self.traindata.index(vector)
-            self.clusters[cluster_idx].current_members.add(self.traindata[vector_idx])
+            self.clusters[cluster_idx].current_members.add(self.traindata.index(vector))
+            if self.clusters[cluster_idx].prototype_start:
+                self.clusters[cluster_idx].prototype = vector
+                self.clusters[cluster_idx].prototype_start = False
+            else:
+                self.clusters[cluster_idx].prototype = list(map(operator.add, self.clusters[cluster_idx].prototype, vector))
 
 
 def distance(vector, prototype):
