@@ -41,6 +41,7 @@ class KMeans:
             # Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
             self.compare_distances()
             # Step 3: recalculate cluster centers
+            self.new_cluster_centers()
 
 
 
@@ -103,6 +104,7 @@ class KMeans:
         for vector in self.traindata:
             distance_matrix = []
             for cluster in self.clusters:
+                # Compute and store a distance between vector and prototype
                 distance_matrix.append(distance(vector, cluster.prototype))
             cluster_idx = distance_matrix.index(max(distance_matrix))
             self.clusters[cluster_idx].current_members.add(self.traindata.index(vector))
@@ -112,6 +114,13 @@ class KMeans:
             else:
                 self.clusters[cluster_idx].prototype = list(
                     map(operator.add, self.clusters[cluster_idx].prototype, vector))
+
+    def new_cluster_centers(self):
+        for cluster in self.clusters:
+            total = []
+            for vector in cluster.current_members:
+                map(sum, zip(total, vector))
+            cluster.prototype = [x / len(cluster.current_members) for x in total]
 
     def check_equal(self):
         for cluster in self.clusters:
