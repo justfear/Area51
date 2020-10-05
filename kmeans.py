@@ -33,7 +33,7 @@ class KMeans:
 
     def train(self):
         # Step 1: Select an initial random partioning with k clusters
-        self.create_random_clusters(0, 1)
+        self.create_random_clusters(1)
         # Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
 
         # Step 3: recalculate cluster centers
@@ -65,20 +65,32 @@ class KMeans:
         for i, cluster in enumerate(self.clusters):
             print("Prototype cluster", i, ":", cluster.prototype)
 
-    def create_random_clusters(self, idx_prev, idx):
+    def create_random_clusters(self, idx):
+        """
+        Partitions all data vectors into randomly split clusters, computes prototypes simultaneously
+
+        :param idx: Always starts at 1, Point of reference for indexing of numbers in the random_values list
+        :return: None
+        """
+        # Create a list containing the ID of all vectors randomly split in K clusters
         random_values = random.sample(range(1, len(self.traindata) - 1), len(self.clusters))
+        # Add 0 and 70 for ease of performance
         random_values.append(0)
         random_values.append(len(self.traindata))
+        # Sort values in ascending order
         random_values.sort()
 
         for cluster in self.clusters:
             prototypes = []
-            for i in range(random_values[idx_prev], random_values[idx]):
-                if i == random_values[idx_prev]:
+            # If we are iterating through the first vector ID in the cluster, make it equal to the prototype variable
+            for i in range(random_values[idx - 1], random_values[idx]):
+                if i == random_values[idx - 1]:
                     prototypes = self.traindata[i]
+                # Otherwise add any subsequent vector's elements together
                 else:
                     prototypes = list(map(operator.add, prototypes, self.traindata[i]))
+                # Add the datapoint ID to our cluster's current_members
                 cluster.current_members.add(i)
-            cluster.prototype = [x/(random_values[idx] - random_values[idx_prev]) for x in prototypes]
-            idx_prev += 1
+            # Compute the mean of each value of all vectors added together in a cluster
+            cluster.prototype = [x/(random_values[idx] - random_values[idx - 1]) for x in prototypes]
             idx += 1
