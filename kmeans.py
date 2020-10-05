@@ -40,7 +40,6 @@ class KMeans:
         # Step 3: recalculate cluster centers
 
         # Step 4: repeat until cluster membership stabilizes
-        pass
 
     def test(self):
         # iterate along all clients. Assumption: the same clients are in the same order as in the testData
