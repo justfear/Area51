@@ -17,6 +17,7 @@ class Cluster:
         self.previous_members = set()
         self.prototype_start = True
 
+
 class KMeans:
     def __init__(self, k, traindata, testdata, dim):
         self.traindata = traindata
@@ -35,11 +36,14 @@ class KMeans:
     def train(self):
         # Step 1: Select an initial random partioning with k clusters
         self.create_random_clusters(1)
-        # Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
-        self.compare_distances()
-        # Step 3: recalculate cluster centers
 
-        # Step 4: repeat until cluster membership stabilizes
+        while not self.check_equal():
+            # Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
+            self.compare_distances()
+            # Step 3: recalculate cluster centers
+
+
+
 
     def test(self):
         # iterate along all clients. Assumption: the same clients are in the same order as in the testData
@@ -106,8 +110,15 @@ class KMeans:
                 self.clusters[cluster_idx].prototype = vector
                 self.clusters[cluster_idx].prototype_start = False
             else:
-                self.clusters[cluster_idx].prototype = list(map(operator.add, self.clusters[cluster_idx].prototype, vector))
+                self.clusters[cluster_idx].prototype = list(
+                    map(operator.add, self.clusters[cluster_idx].prototype, vector))
 
+    def check_equal(self):
+        for cluster in self.clusters:
+            for a, b in zip(cluster.current_members, cluster.previous_members):
+                if a != b:
+                    return False
+        return True
 
 def distance(vector, prototype):
     total = 0
