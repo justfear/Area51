@@ -3,6 +3,7 @@ import random
 import operator
 import math
 
+
 class Cluster:
     """This class represents the clusters, it contains the
     prototype (the mean of all it's members) and memberlists with the
@@ -35,7 +36,6 @@ class KMeans:
         # Step 1: Select an initial random partioning with k clusters
         self.create_random_clusters(1)
         # Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
-
 
         # Step 3: recalculate cluster centers
 
@@ -94,14 +94,18 @@ class KMeans:
                 # Add the datapoint ID to our cluster's current_members
                 cluster.current_members.add(i)
             # Compute the mean of each value of all vectors added together in a cluster
-            cluster.prototype = [x/(random_values[idx] - random_values[idx - 1]) for x in prototypes]
+            cluster.prototype = [x / (random_values[idx] - random_values[idx - 1]) for x in prototypes]
             idx += 1
-    def calculate_distance(self, idx1, idx2):
-        i = 0
-        total = 0
-        while i < 200:
-            add = pow(self.traindata[idx2][i] - self.traindata[idx1][i], 2)
-            total += add
-            i += 1
+
+
+    def compare_distances(self):
+        for cluster in self.clusters:
+
+
+
+def distance(vector, prototype):
+    total = 0
+    for x, p in zip(vector, prototype):
+        total += pow(x - p, 2)
         return math.sqrt(total)
 
