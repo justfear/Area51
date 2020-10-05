@@ -33,7 +33,8 @@ class KMeans:
     def train(self):
         # implement k-means algorithm here:
         # Step 1: Select an initial random partioning with k clusters
-        partition = self.clusters[random.randint(0, len(self.clusters)): random.randint(0, len(self.clusters))]
+        partition = self.clusters[random.randint(0, len(self.traindata)): random.randint(0, len(self.traindata))]
+        print(partition)
         # Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
 
         # Step 3: recalculate cluster centers
