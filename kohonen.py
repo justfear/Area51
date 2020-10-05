@@ -3,9 +3,11 @@ class Cluster:
     prototype (the mean of all it's members) and memberlists with the
     ID's (which are Integer objects) of the datapoints that are member
     of that cluster."""
+
     def __init__(self, dim):
         self.prototype = [0.0 for _ in range(dim)]
         self.current_members = set()
+
 
 class Kohonen:
     def __init__(self, n, epochs, traindata, testdata, dim):
@@ -51,7 +53,7 @@ class Kohonen:
         print("Prefetch threshold =", self.prefetch_threshold)
         print("Hitrate:", self.hitrate)
         print("Accuracy:", self.accuracy)
-        print("Hitrate+Accuracy =", self.hitrate+self.accuracy)
+        print("Hitrate+Accuracy =", self.hitrate + self.accuracy)
 
     def print_members(self):
         for i in range(self.n):
@@ -61,4 +63,4 @@ class Kohonen:
     def print_prototypes(self):
         for i in range(self.n):
             for j in range(self.n):
-               print("Prototype cluster", (i, j), ":", self.clusters[i][j].prototype)
+                print("Prototype cluster", (i, j), ":", self.clusters[i][j].prototype)
