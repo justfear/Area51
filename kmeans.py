@@ -32,8 +32,6 @@ class KMeans:
 
     def train(self):
         # Step 1: Select an initial random partioning with k clusters
-        random_values = random.sample(self.traindata, len(self.clusters))
-        print(random_values)
         # Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
         # Step 3: recalculate cluster centers
         # Step 4: repeat until cluster membership stabilizes
@@ -63,3 +61,11 @@ class KMeans:
     def print_prototypes(self):
         for i, cluster in enumerate(self.clusters):
             print("Prototype cluster", i, ":", cluster.prototype)
+
+    def create_random_clusters(self, idx_prev, idx):
+        random_values = random.sample(range(1, len(self.traindata)-1), len(self.clusters))
+        for cluster in self.clusters:
+            idx_prev += 1
+            idx += 1
+            for i in range(random_values[idx_prev], idx):
+                cluster.current_members.add(i)
