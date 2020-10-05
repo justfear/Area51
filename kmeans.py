@@ -1,5 +1,6 @@
 """kmeans.py"""
 import random
+import operator
 
 
 class Cluster:
@@ -69,11 +70,15 @@ class KMeans:
         random_values.append(0)
         random_values.append(len(self.traindata))
         random_values.sort()
+
         for cluster in self.clusters:
-            sum = 0
+            prototypes = []
             idx_prev += 1
             idx += 1
             for i in range(random_values[idx_prev], random_values[idx]):
+                if i == random_values[idx_prev]:
+                    prototypes = self.traindata[i]
+                else:
+                    prototypes = list(map(operator.add, prototypes, self.traindata[i]))
                 cluster.current_members.add(i)
-                sum += self.traindata[i]
-            sum /= len(cluster.current_members)
+            cluster.prototype = list(map(operator.div, prototypes, random_values[idx] - random_values[idx_prev]))
