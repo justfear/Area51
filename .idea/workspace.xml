@@ -6,206 +6,26 @@
         <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
         <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
       </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
     </expand>
     <select />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0f333a50-0828-480e-971b-73bbcb6bf2e7" name="Default Changelist" comment="ASD">
-      <change afterPath="$PROJECT_DIR$/kmeans.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kohonen.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run_clustering.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Area51.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Area51.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bayespam.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/bayesian-text-classifier" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1001.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1002.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1003.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1004.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1005.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1006.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1007.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1008.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1009.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1010.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1011.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1012.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1013.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1014.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1015.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1016.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1017.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1018.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1019.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1020.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1021.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1022.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1023.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1024.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1025.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/regular/regular-1026.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1001.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1002.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1003.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1004.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1005.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1006.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1007.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1008.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1009.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1010.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1011.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1012.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1013.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1014.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1015.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1016.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1017.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1018.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1019.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1020.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1021.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1022.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1023.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1024.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1025.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1026.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1027.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1028.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1029.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1030.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1031.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1032.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1033.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1034.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1035.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1036.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1037.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1038.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1039.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1040.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1041.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1042.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1043.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1044.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1045.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1046.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1047.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1048.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1049.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1050.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1051.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1052.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1053.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1054.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1055.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1056.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1057.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1058.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1059.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1060.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1061.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1062.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1063.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1064.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1065.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1066.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1067.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/test/spam/spam-1068.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0001.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0002.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0003.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0004.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0005.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0006.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0007.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0008.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0009.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0010.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0011.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0012.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0013.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0014.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0015.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0016.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0017.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0018.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0019.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0020.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0021.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0022.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0023.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0024.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0025.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/regular/regular-0026.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0001.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0002.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0003.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0004.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0005.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0006.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0007.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0008.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0009.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0010.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0011.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0012.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0013.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0014.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0015.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0016.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0017.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0018.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0019.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0020.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0021.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0022.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0023.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0024.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0025.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0026.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0027.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0028.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0029.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0030.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0031.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0032.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0033.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0034.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0035.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0036.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0037.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0038.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0039.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0040.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0041.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0042.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0043.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0044.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0045.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0046.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0047.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0048.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0049.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0050.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0051.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0052.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0053.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0054.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0055.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0056.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0057.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0058.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0059.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0060.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0061.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0062.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0063.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0064.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0065.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0066.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0067.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spam-filter/train/spam/spam-0068.msg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vocab.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kmeans.py" beforeDir="false" afterPath="$PROJECT_DIR$/kmeans.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.dat" beforeDir="false" afterPath="$PROJECT_DIR$/test.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train.dat" beforeDir="false" afterPath="$PROJECT_DIR$/train.dat" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -233,6 +53,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -603,29 +424,40 @@
     <option name="LAST_COMMIT_MESSAGE" value="ASD" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="510" y="254" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600800277586">
-      <screen x="0" y="23" width="1440" height="852" />
+    <state x="544" y="223" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1601890377956">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="544" y="223" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824/0.2160.2194.629@0.0.1536.824" timestamp="1601890377956" />
     <state x="510" y="254" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.852@0.23.1440.852" timestamp="1600800277586" />
     <state x="119" y="123" width="1240" height="645" key="DiffContextDialog" timestamp="1601333245187">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
     <state x="119" y="123" width="1240" height="645" key="DiffContextDialog/0.23.1440.852@0.23.1440.852" timestamp="1601333245187" />
+    <state x="148" y="66" key="MergeDialog" timestamp="1601907583482">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="148" y="66" key="MergeDialog/0.0.1536.824/0.2160.2194.629@0.0.1536.824" timestamp="1601907583482" />
     <state x="361" y="214" key="MultipleFileMergeDialog" timestamp="1600956939428">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
     <state x="361" y="214" key="MultipleFileMergeDialog/0.23.1440.852@0.23.1440.852" timestamp="1600956939427" />
+    <state x="279" y="58" key="SettingsEditor" timestamp="1601890373512">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="279" y="58" key="SettingsEditor/0.0.1536.824/0.2160.2194.629@0.0.1536.824" timestamp="1601890373512" />
     <state x="320" y="185" key="Vcs.Push.Dialog.v2" timestamp="1601334533341">
       <screen x="0" y="23" width="1440" height="852" />
     </state>
     <state x="320" y="185" key="Vcs.Push.Dialog.v2/0.23.1440.852@0.23.1440.852" timestamp="1601334533341" />
-    <state x="523" y="366" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1601332512634">
-      <screen x="0" y="23" width="1440" height="852" />
+    <state x="558" y="332" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1601907577167">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="558" y="332" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824/0.2160.2194.629@0.0.1536.824" timestamp="1601907577167" />
     <state x="523" y="366" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1440.852@0.23.1440.852" timestamp="1601332512634" />
-    <state x="385" y="199" key="search.everywhere.popup" timestamp="1601542936062">
-      <screen x="0" y="23" width="1440" height="852" />
+    <state x="411" y="170" width="672" height="678" key="search.everywhere.popup" timestamp="1601902618074">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="411" y="170" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/0.2160.2194.629@0.0.1536.824" timestamp="1601902618074" />
     <state x="385" y="199" key="search.everywhere.popup/0.23.1440.852@0.23.1440.852" timestamp="1601542936062" />
   </component>
 </project>

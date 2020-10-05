@@ -1,7 +1,7 @@
 """kmeans.py"""
 import random
 import operator
-
+import math
 
 class Cluster:
     """This class represents the clusters, it contains the
@@ -35,6 +35,7 @@ class KMeans:
         # Step 1: Select an initial random partioning with k clusters
         self.create_random_clusters(1)
         # Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
+
 
         # Step 3: recalculate cluster centers
 
@@ -95,3 +96,12 @@ class KMeans:
             # Compute the mean of each value of all vectors added together in a cluster
             cluster.prototype = [x/(random_values[idx] - random_values[idx - 1]) for x in prototypes]
             idx += 1
+    def calculate_distance(self, idx1, idx2):
+        i = 0
+        total = 0
+        while i < 200:
+            add = pow(self.traindata[idx2][i] - self.traindata[idx1][i], 2)
+            total += add
+            i += 1
+        return math.sqrt(total)
+
