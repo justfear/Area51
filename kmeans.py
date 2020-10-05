@@ -95,4 +95,3 @@ class KMeans:
             # Compute the mean of each value of all vectors added together in a cluster
             cluster.prototype = [x/(random_values[idx] - random_values[idx - 1]) for x in prototypes]
             idx += 1
-
