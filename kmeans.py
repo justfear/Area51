@@ -92,15 +92,19 @@ class KMeans:
                 else:
                     prototypes = list(map(operator.add, prototypes, self.traindata[i]))
                 # Add the datapoint ID to our cluster's current_members
-                cluster.current_members.add(i)
+                cluster.previous_members.add(i)
             # Compute the mean of each value of all vectors added together in a cluster
             cluster.prototype = [x / (random_values[idx] - random_values[idx - 1]) for x in prototypes]
             idx += 1
 
-
     def compare_distances(self):
-        for cluster in self.clusters:
-
+        for vector in self.traindata:
+            distance_matrix = []
+            for cluster in self.clusters:
+                distance_matrix.append(distance(vector, cluster.prototype))
+            cluster_idx = distance_matrix.index(max(distance_matrix))
+            vector_idx = self.traindata.index(vector)
+            self.clusters[cluster_idx].current_members.add(self.traindata[vector_idx])
 
 
 def distance(vector, prototype):
@@ -108,4 +112,3 @@ def distance(vector, prototype):
     for x, p in zip(vector, prototype):
         total += pow(x - p, 2)
         return math.sqrt(total)
-
