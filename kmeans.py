@@ -96,7 +96,6 @@ class KMeans:
             # Compute the mean of each value of all vectors added together in a cluster
             cluster.prototype = [x/(random_values[idx] - random_values[idx - 1]) for x in prototypes]
             idx += 1
-
     def calculate_distance(self, idx1, idx2):
         i = 0
         total = 0
@@ -105,5 +104,4 @@ class KMeans:
             total += add
             i += 1
         return math.sqrt(total)
-
 
