@@ -37,6 +37,7 @@ class KMeans:
         # Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
 
         # Step 3: recalculate cluster centers
+
         # Step 4: repeat until cluster membership stabilizes
         pass
 
@@ -94,3 +95,4 @@ class KMeans:
             # Compute the mean of each value of all vectors added together in a cluster
             cluster.prototype = [x/(random_values[idx] - random_values[idx - 1]) for x in prototypes]
             idx += 1
+
