@@ -8,8 +8,8 @@ class Cluster:
     of that cluster."""
 
     def __init__(self, dim, traindata):
-        self.current_members = set(random.sample(range(len(traindata))))
-        self.prototype = [random.sample(len(traindata)) for _ in range(dim)]
+        self.current_members = set(random.sample(range(len(traindata) - 1), 1))
+        self.prototype = [x / len() for _ in range(dim)]
 
 
 class Kohonen:

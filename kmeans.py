@@ -167,8 +167,6 @@ class KMeans:
                 return False
             ## Reset the prototype_start boolean
             cluster.prototype_start = True
-            print(cluster.current_members)
-            print(cluster.previous_members)
             ## Finalize the calculation of the average of the summed vectors in each cluster (prototype calculation)
             cluster.prototype = [x / len(cluster.current_members) for x in cluster.prototype]
             ## Check whether membership has stabilized in all clusters
