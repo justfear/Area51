@@ -75,14 +75,14 @@ class Kohonen:
             ## Step 3: Every input vector is presented to the map (always in the same
             ## order) For each vector its Best Matching Unit is found, and
             ## each cluster in the vector's neighborhood is found:
-            self.find_closest_or_in_radius(self.traindata, self.clusters, self.bmu_matrix, False)
-            self.find_closest_or_in_radius(self.bmu_matrix, self.clusters, self.neighbourhood_nodes, True)
-        # Step 4: All nodes within the neighbourhood of the BMU are changed,
-        # you don't have to use distance relative learning.
-        ## Step 5: Calculate the new learning rate and radius
+            self.find_closest_or_in_radius(radius, self.traindata, self.clusters, self.bmu_matrix, False)
+            self.find_closest_or_in_radius(radius, self.bmu_matrix, self.clusters, self.neighbourhood_nodes, True)
+            # Step 4: All nodes within the neighbourhood of the BMU are changed,
+            # you don't have to use distance relative learning.
+
+            ## Step 5: Calculate the new learning rate and radius
             radius = self.initial_radius * (1 - (self.epochs/epoch))
             eta = self.initial_learning_rate * (1 - (self.epochs/epoch))
-        # Since training kohonen maps can take quite a while, presenting the user with a progress bar would be nice
 
     def test(self):
         # iterate along all clients
@@ -111,7 +111,7 @@ class Kohonen:
             for j in range(self.n):
                 print("Prototype cluster", (i, j), ":", self.clusters[i][j].prototype)
 
-    def find_closest_or_in_radius(self, one_d_matrix, two_d_matrix, results_matrix, neighbors):
+    def find_closest_or_in_radius(self, radius, one_d_matrix, two_d_matrix, results_matrix, neighbors):
         for vector in one_d_matrix:
             distance_matrix = []
             for row in two_d_matrix:
@@ -119,7 +119,7 @@ class Kohonen:
                     distance_matrix.append(distance(vector, element))
             if neighbors:
                 results_matrix.append([idx for idx in range(len(distance_matrix))
-                                       if distance_matrix[idx] < self.square_size])
+                                       if distance_matrix[idx] < radius])
             else:
                 best_idx = distance_matrix.index(min(distance_matrix))
                 idx_1, idx_2 = find_2D_index(best_idx, self.n)
