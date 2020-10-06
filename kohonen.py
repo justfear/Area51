@@ -48,14 +48,14 @@ class Cluster:
         first = True
         prototype = []
         for idx in self.current_members:
-            for vector in traindata[idx]:
-                if first:
-                    prototype = vector
-                    first = False
-                else:
-                    prototype = list(map(operator.add, prototype, vector))
+            if first:
+                prototype = traindata[idx]
+                first = False
+            else:
+                prototype = list(map(operator.add, prototype, traindata[idx]))
 
         return [x / len(self.current_members) for x in prototype]
+
 
 class Kohonen:
     def __init__(self, n, epochs, traindata, testdata, dim):
@@ -87,7 +87,7 @@ class Kohonen:
             ## order) For each vector its Best Matching Unit is found, and
             ## each cluster in the vector's neighborhood is found:
             self.find_closest_or_in_radius(eta, radius, self.traindata, self.clusters, False)
-            self.find_closest_or_in_radius(eta, radius, self.bmu_matrix, self.clusters,  True)
+            self.find_closest_or_in_radius(eta, radius, self.bmu_matrix, self.clusters, True)
             # Step 4: All nodes within the neighbourhood of the BMU are changed,
             # you don't have to use distance relative learning.
 
