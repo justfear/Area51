@@ -115,7 +115,8 @@ class Kohonen:
                 for element in row:
                     distance_matrix.append(distance(vector, element))
             if neighbors:
-                results_matrix.append(distance_matrix)
+                results_matrix.append([idx for idx in range(len(distance_matrix))
+                                       if distance_matrix[idx] < self.square_size])
             else:
                 best_idx = distance_matrix.index(min(distance_matrix))
                 idx_1, idx_2 = find_2D_index(best_idx, self.n)
