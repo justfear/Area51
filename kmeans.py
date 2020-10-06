@@ -16,6 +16,7 @@ class Cluster:
         self.current_members = set()
         self.previous_members = set()
         self.prototype_start = True
+        self.beginning = True
 
 
 def distance(vector, prototype):
@@ -159,8 +160,9 @@ class KMeans:
             cluster.prototype = [x / len(cluster.current_members) for x in cluster.prototype]
             ## Check whether membership has stabilized in all clusters
             for current, previous in zip(cluster.current_members, cluster.previous_members):
-                if current != previous:
+                if current != previous or cluster.beginning:
                     check = False
+                cluster.beginning = False
             ## Move the current member set to previous, and clear the current member set
             cluster.previous_members = cluster.current_members
             ## It does not matter if the membership has stabilized since both sets would be the same anyways
