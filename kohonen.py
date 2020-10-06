@@ -15,6 +15,7 @@ def distance(vector, prototype):
         total += pow(x - p, 2)
         return math.sqrt(total)
 
+
 class Cluster:
     """This class represents the clusters, it contains the
     prototype (the mean of all it's members) and memberlists with the
@@ -60,11 +61,13 @@ class Kohonen:
     def train(self):
         # Repeat 'epochs' times:
         for epoch in self.epochs:
-
-        # Step 2: Calculate the squareSize and the learningRate, these decrease
-        # linearly with the number of epochs.
+            # Step 2: Calculate the squareSize and the learningRate, these decrease
+            # linearly with the number of epochs.
+            self.squareSize /= epoch
+            self.initial_learning_rate /= epoch
         # Step 3: Every input vector is presented to the map (always in the same
         # order) For each vector its Best Matching Unit is found, and :
+        
         # Step 4: All nodes within the neighbourhood of the BMU are changed,
         # you don't have to use distance relative learning. Since training kohonen maps can take
         # quite a while, presenting the user with a progress bar would be nice
