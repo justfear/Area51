@@ -53,7 +53,7 @@ class Kohonen:
         # Threshold above which the corresponding html is prefetched
         self.prefetch_threshold = 0.5
         self.initial_learning_rate = 0.8 ## eta
-        self.squareSize = (n * n) / 2 ## r
+        self.square_size = (n * n) / 2 ## r
         # The accuracy and hitrate are the performance metrics (i.e. the results)
         self.accuracy = 0
         self.hitrate = 0
@@ -63,7 +63,7 @@ class Kohonen:
         for epoch in range(1, self.epochs):
             # Step 2: Calculate the squareSize and the learningRate, these decrease
             # linearly with the number of epochs.
-            self.squareSize /= epoch
+            self.square_size /= epoch
             self.initial_learning_rate /= epoch
             # Step 3: Every input vector is presented to the map (always in the same
             # order) For each vector its Best Matching Unit is found, and :
@@ -77,7 +77,7 @@ class Kohonen:
     def check_prototypes_in_radius(self):
         for array in self.clusters:
             for cluster in array:
-                if self.squareSize < compute_distance(cluster.prototype, self.BMU):
+                if self.square_size < compute_distance(cluster.prototype, self.BMU):
                     # save them somewhere
 
     def compute_distance():
