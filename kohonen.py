@@ -59,18 +59,18 @@ class Kohonen:
         # Threshold above which the corresponding html is prefetched
         self.prefetch_threshold = 0.5
         self.initial_learning_rate = 0.8  ## eta
-        self.square_size = (n * n) / 2  ## r
+        self.initial_radius = (n * n) / 2  ## radius
         # The accuracy and hitrate are the performance metrics (i.e. the results)
         self.accuracy = 0
         self.hitrate = 0
 
     def train(self):
+        # Step 2: Calculate the squareSize and the learningRate, these decrease
+        # linearly with the number of epochs.
+        radius = self.initial_radius
+        eta = self.initial_learning_rate
         # Repeat 'epochs' times:
         for epoch in range(1, self.epochs):
-            # Step 2: Calculate the squareSize and the learningRate, these decrease
-            # linearly with the number of epochs.
-            self.square_size /= epoch
-            self.initial_learning_rate /= epoch
             ## Step 3: Every input vector is presented to the map (always in the same
             ## order) For each vector its Best Matching Unit is found, and
             ## each cluster in the vector's neighborhood is found:
@@ -78,7 +78,9 @@ class Kohonen:
             self.find_closest_or_in_radius(self.bmu_matrix, self.clusters, self.neighbourhood_nodes, True)
         # Step 4: All nodes within the neighbourhood of the BMU are changed,
         # you don't have to use distance relative learning.
-
+        ## Step 5: Calculate the new learning rate and radius
+            radius = self.initial_radius * (1 - (self.epochs/epoch))
+            eta = self.initial_learning_rate * (1 - (self.epochs/epoch))
         # Since training kohonen maps can take quite a while, presenting the user with a progress bar would be nice
 
     def test(self):
