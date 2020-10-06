@@ -155,7 +155,8 @@ class KMeans:
         check = True
         for cluster in self.clusters:
             if cluster.beginning:
-                cluster.beginning, check = False
+                cluster.beginning = False
+                check = False
             ## Reset the prototype_start boolean
             cluster.prototype_start = True
             ## Finalize the calculation of the average of the summed vectors in each cluster (prototype calculation)
