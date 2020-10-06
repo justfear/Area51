@@ -1,4 +1,5 @@
 import random
+import operator
 
 
 class Cluster:
@@ -7,9 +8,22 @@ class Cluster:
     ID's (which are Integer objects) of the datapoints that are member
     of that cluster."""
 
-    def __init__(self, dim, traindata):
+    def __init__(self, traindata):
         self.current_members = set(random.sample(range(len(traindata) - 1), 1))
-        self.prototype = [x / len() for _ in range(dim)]
+        self.prototype = self.compute_prototype(traindata)
+
+    def compute_prototype(self, traindata):
+        first = True
+        prototype = []
+        for idx in self.current_members:
+            for vector in traindata[idx]:
+                if first:
+                    prototype = vector
+                    first = False
+                else:
+                    prototype = list(map(operator.add, prototype, vector))
+
+        return [x / len(self.current_members) for x in prototype]
 
 
 class Kohonen:
@@ -21,7 +35,7 @@ class Kohonen:
         self.dim = dim
 
         # A 2-dimensional list of clusters. Size == N x N
-        self.clusters = [[Cluster(dim, traindata) for _ in range(n)] for _ in range(n)]
+        self.clusters = [[Cluster(traindata) for _ in range(n)] for _ in range(n)]
         # Threshold above which the corresponding html is prefetched
         self.prefetch_threshold = 0.5
         self.initial_learning_rate = 0.8
