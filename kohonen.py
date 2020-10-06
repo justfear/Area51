@@ -43,7 +43,7 @@ class Cluster:
 class Kohonen:
     def __init__(self, n, epochs, traindata, testdata, dim):
         self.n = n
-        self.epochs = epochs ##t_max
+        self.epochs = epochs  ## t_max
         self.traindata = traindata
         self.testdata = testdata
         self.dim = dim
@@ -52,35 +52,33 @@ class Kohonen:
         self.clusters = [[Cluster(traindata) for _ in range(n)] for _ in range(n)]
         # Threshold above which the corresponding html is prefetched
         self.prefetch_threshold = 0.5
-        self.initial_learning_rate = 0.8
-        self.squareSize = ...
+        self.initial_learning_rate = 0.8 ## eta
+        self.squareSize = (n * n) / 2 ## r
         # The accuracy and hitrate are the performance metrics (i.e. the results)
         self.accuracy = 0
         self.hitrate = 0
 
     def train(self):
         # Repeat 'epochs' times:
-        for epoch in self.epochs:
+        for epoch in range(1, self.epochs):
             # Step 2: Calculate the squareSize and the learningRate, these decrease
             # linearly with the number of epochs.
             self.squareSize /= epoch
             self.initial_learning_rate /= epoch
-        # Step 3: Every input vector is presented to the map (always in the same
-        # order) For each vector its Best Matching Unit is found, and :
-        
+            # Step 3: Every input vector is presented to the map (always in the same
+            # order) For each vector its Best Matching Unit is found, and :
+
         # Step 4: All nodes within the neighbourhood of the BMU are changed,
         # you don't have to use distance relative learning. Since training kohonen maps can take
         # quite a while, presenting the user with a progress bar would be nice
 
         pass
 
-    def check_prototypes_in_radious(self):
-        r = (self.n * self.n)/2
+    def check_prototypes_in_radius(self):
         for array in self.clusters:
             for cluster in array:
-                if r < compute_distence(cluster.prototype, self.BMU):
-                    #save them somewhere
-
+                if self.squareSize < compute_distance(cluster.prototype, self.BMU):
+                    # save them somewhere
 
     def compute_distance():
 
