@@ -154,15 +154,16 @@ class KMeans:
         """
         check = True
         for cluster in self.clusters:
+            if cluster.beginning:
+                cluster.beginning, check = False
             ## Reset the prototype_start boolean
             cluster.prototype_start = True
             ## Finalize the calculation of the average of the summed vectors in each cluster (prototype calculation)
             cluster.prototype = [x / len(cluster.current_members) for x in cluster.prototype]
             ## Check whether membership has stabilized in all clusters
             for current, previous in zip(cluster.current_members, cluster.previous_members):
-                if current != previous or cluster.beginning:
+                if current != previous:
                     check = False
-                cluster.beginning = False
             ## Move the current member set to previous, and clear the current member set
             cluster.previous_members = cluster.current_members
             ## It does not matter if the membership has stabilized since both sets would be the same anyways
