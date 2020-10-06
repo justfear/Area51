@@ -124,3 +124,8 @@ class Kohonen:
                 best_idx = distance_matrix.index(min(distance_matrix))
                 idx_1, idx_2 = find_2D_index(best_idx, self.n)
                 results_matrix.append(two_d_matrix[idx_1][idx_2])
+
+
+def find_new_prototype(old_prototype, eta, vector):
+    new_prototype = (1 - eta) * old_prototype + eta * vector
+    return new_prototype
