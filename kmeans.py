@@ -18,6 +18,23 @@ class Cluster:
         self.prototype_start = True
 
 
+def distance(vector, prototype):
+    total = 0
+    for x, p in zip(vector, prototype):
+        total += pow(x - p, 2)
+        return math.sqrt(total)
+
+
+def prototype_computation(cluster, vector):
+    ## If we are iterating through the first vector ID in the cluster, make it equal to the prototype variable
+    if cluster.prototype_start:
+        cluster.prototype = vector
+        cluster.prototype_start = False
+    ## Otherwise sum the vectors together
+    else:
+        cluster.prototype = list(map(operator.add, cluster.prototype, vector))
+
+
 class KMeans:
     def __init__(self, k, traindata, testdata, dim):
         self.traindata = traindata
@@ -34,17 +51,17 @@ class KMeans:
         self.hitrate = 0
 
     def train(self):
-        # Step 1: Select an initial random partioning with k clusters
+        ## Step 1: Select an initial random partitioning with k clusters
         self.create_random_clusters(1)
 
+        ## Repeat loop while membership has not stabilized
+        ## Set prototype_start boolean to True
+        ## Finish prototype computation (divide the summed vectors)
         while not self.check_equal():
-            # Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
+
+            ## Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
+            ## Simultaneously begin the computation of the prototype
             self.compare_distances()
-            # Step 3: recalculate cluster centers
-            self.new_cluster_centers()
-
-
-
 
     def test(self):
         # iterate along all clients. Assumption: the same clients are in the same order as in the testData
@@ -75,62 +92,53 @@ class KMeans:
         """
         Partitions all data vectors into randomly split clusters, computes prototypes simultaneously
 
-        :param idx: Always starts at 1, Point of reference for indexing of numbers in the random_values list
+        :param idx: Always starts at 1, a point of reference for the indexing of numbers in the random_values list
         :return: None
         """
-        # Create a list containing the ID of all vectors randomly split in K clusters
+        ## Create a list containing the ID of all vectors randomly split in K clusters
         random_values = random.sample(range(1, len(self.traindata) - 1), len(self.clusters))
-        # Add 0 and 70 for ease of performance
+        ## Add 0 and maximum index as points of reference
         random_values.append(0)
         random_values.append(len(self.traindata))
-        # Sort values in ascending order
+        ## Sort values in ascending order
         random_values.sort()
+        print("Random values:", random_values)
 
         for cluster in self.clusters:
-            # If we are iterating through the first vector ID in the cluster, make it equal to the prototype variable
             for i in range(random_values[idx - 1], random_values[idx]):
-                if i == random_values[idx - 1]:
-                    cluster.prototype = self.traindata[i]
-                # Otherwise add any subsequent vector's elements together
-                else:
-                    cluster.prototype = list(map(operator.add, cluster.prototype, self.traindata[i]))
-                # Add the datapoint ID to our cluster's current_members
-                cluster.previous_members.add(i)
-            # Compute the mean of each value of all vectors added together in a cluster
-            cluster.prototype = [x / (random_values[idx] - random_values[idx - 1]) for x in cluster.prototype]
+                ## Add the datapoint ID to our cluster's current_members
+                cluster.current_members.add(i)
+                prototype_computation(cluster, self.traindata[i])
+            cluster.prototype = [x / len(cluster.current_members) for x in cluster.prototype]
             idx += 1
 
     def compare_distances(self):
         for vector in self.traindata:
             distance_matrix = []
             for cluster in self.clusters:
-                # Compute and store a distance between vector and prototype
+                ## Compute and store a distance between vector and prototype in a list
                 distance_matrix.append(distance(vector, cluster.prototype))
+            ## Find the index (in the matrix) of the cluster closest to the vector
+            ## The index in the matrix is the same as the index in the cluster list
             cluster_idx = distance_matrix.index(max(distance_matrix))
+            ## Add the vector's index to the current_members set of the aforementioned cluster
             self.clusters[cluster_idx].current_members.add(self.traindata.index(vector))
-            if self.clusters[cluster_idx].prototype_start:
-                self.clusters[cluster_idx].prototype = vector
-                self.clusters[cluster_idx].prototype_start = False
-            else:
-                self.clusters[cluster_idx].prototype = list(
-                    map(operator.add, self.clusters[cluster_idx].prototype, vector))
-
-    def new_cluster_centers(self):
-        for cluster in self.clusters:
-            total = []
-            for vector in cluster.current_members:
-                map(sum, zip(total, vector))
-            cluster.prototype = [x / len(cluster.current_members) for x in total]
+            ## Add the vector to the prototype computation of said cluster
+            prototype_computation(self.clusters[cluster_idx], vector)
 
     def check_equal(self):
+        check = True
         for cluster in self.clusters:
-            for a, b in zip(cluster.current_members, cluster.previous_members):
-                if a != b:
-                    return False
-        return True
-
-def distance(vector, prototype):
-    total = 0
-    for x, p in zip(vector, prototype):
-        total += pow(x - p, 2)
-        return math.sqrt(total)
+            ## Reset the prototype_start boolean
+            cluster.prototype_start = True
+            ## Finalize the calculation of the average of the summed vectors in each cluster (prototype calculation)
+            cluster.prototype = [x / len(cluster.current_members) for x in cluster.prototype]
+            ## Check whether membership has stabilized in all clusters
+            for current, previous in zip(cluster.current_members, cluster.previous_members):
+                if current != previous:
+                    check = False
+            ## Move the current member set to previous, and clear the current member set
+            cluster.previous_members = cluster.current_members
+            ## It does not matter if the membership has stabilized since both sets would be the same anyways
+            cluster.current_members.clear()
+        return check
