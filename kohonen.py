@@ -1,12 +1,15 @@
+import random
+
+
 class Cluster:
     """This class represents the clusters, it contains the
     prototype (the mean of all it's members) and memberlists with the
     ID's (which are Integer objects) of the datapoints that are member
     of that cluster."""
 
-    def __init__(self, dim):
-        self.prototype = [0.0 for _ in range(dim)]
-        self.current_members = set()
+    def __init__(self, dim, traindata):
+        self.current_members = set(random.sample(range(len(traindata))))
+        self.prototype = [random.sample(len(traindata)) for _ in range(dim)]
 
 
 class Kohonen:
@@ -18,7 +21,7 @@ class Kohonen:
         self.dim = dim
 
         # A 2-dimensional list of clusters. Size == N x N
-        self.clusters = [[Cluster(dim) for _ in range(n)] for _ in range(n)]
+        self.clusters = [[Cluster(dim, traindata) for _ in range(n)] for _ in range(n)]
         # Threshold above which the corresponding html is prefetched
         self.prefetch_threshold = 0.5
         self.initial_learning_rate = 0.8
@@ -30,7 +33,7 @@ class Kohonen:
         # Step 1: initialize map with random vectors (A good place to do this, is in the initialisation of the
         # clusters) Repeat 'epochs' times:
         # Step 2: Calculate the squareSize and the learningRate, these decrease
-        # lineary with the number of epochs.
+        # linearly with the number of epochs.
         # Step 3: Every input vector is presented to the map (always in the same
         # order) For each vector its Best Matching Unit is found, and :
         # Step 4: All nodes within the neighbourhood of the BMU are changed,

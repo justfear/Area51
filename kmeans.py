@@ -18,6 +18,12 @@ class Cluster:
         self.prototype_start = True
         self.beginning = True
 
+    def update_member_sets(self):
+        ## Move the current member set to previous, and clear the current member set
+        self.previous_members = self.current_members
+        ## It does not matter if the membership has stabilized since both sets would be the same anyways
+        self.current_members.clear()
+
 
 def distance(vector, prototype):
     """
@@ -138,7 +144,7 @@ class KMeans:
                 distance_matrix.append(distance(vector, cluster.prototype))
             ## Find the index (in the matrix) of the cluster closest to the vector
             ## The index in the matrix is the same as the index in the cluster list
-            cluster_idx = distance_matrix.index(max(distance_matrix))
+            cluster_idx = distance_matrix.index(min(distance_matrix))
             ## Add the vector's index to the current_members set of the aforementioned cluster
             self.clusters[cluster_idx].current_members.add(self.traindata.index(vector))
             ## Add the vector to the prototype computation of said cluster
@@ -156,6 +162,7 @@ class KMeans:
             ## If we just initialized the clusters, then instantly return False, and update the beginning boolean
             if cluster.beginning:
                 for cluster in self.clusters:
+                    cluster.update_member_sets()
                     cluster.beginning = False
                 return False
             ## Reset the prototype_start boolean
@@ -168,8 +175,5 @@ class KMeans:
             for current, previous in zip(cluster.current_members, cluster.previous_members):
                 if current != previous:
                     check = False
-            ## Move the current member set to previous, and clear the current member set
-            cluster.previous_members = cluster.current_members
-            ## It does not matter if the membership has stabilized since both sets would be the same anyways
-            cluster.current_members.clear()
+            cluster.update_member_sets()
         return check
