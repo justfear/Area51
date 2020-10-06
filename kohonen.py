@@ -27,6 +27,7 @@ class Cluster:
     of that cluster."""
 
     def __init__(self, traindata):
+        ## Step 1:
         self.current_members = set(random.sample(range(len(traindata) - 1), 1))
         self.prototype = self.compute_prototype(traindata)
 
