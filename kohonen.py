@@ -1,6 +1,19 @@
 import random
 import operator
+import math
 
+
+def distance(vector, prototype):
+    """
+    Calculates the Euclidean distance between a given data vector and a prototype vector
+    :param vector: The specified data vector
+    :param prototype: The specified prototype vector
+    :return: The linear distance between the two vectors
+    """
+    total = 0
+    for x, p in zip(vector, prototype):
+        total += pow(x - p, 2)
+        return math.sqrt(total)
 
 class Cluster:
     """This class represents the clusters, it contains the
@@ -29,7 +42,7 @@ class Cluster:
 class Kohonen:
     def __init__(self, n, epochs, traindata, testdata, dim):
         self.n = n
-        self.epochs = epochs
+        self.epochs = epochs ##t_max
         self.traindata = traindata
         self.testdata = testdata
         self.dim = dim
@@ -39,6 +52,7 @@ class Kohonen:
         # Threshold above which the corresponding html is prefetched
         self.prefetch_threshold = 0.5
         self.initial_learning_rate = 0.8
+        self.squareSize = ...
         # The accuracy and hitrate are the performance metrics (i.e. the results)
         self.accuracy = 0
         self.hitrate = 0
@@ -46,6 +60,7 @@ class Kohonen:
     def train(self):
         # Repeat 'epochs' times:
         for epoch in self.epochs:
+
         # Step 2: Calculate the squareSize and the learningRate, these decrease
         # linearly with the number of epochs.
         # Step 3: Every input vector is presented to the map (always in the same
