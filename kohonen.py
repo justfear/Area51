@@ -29,7 +29,9 @@ def find_2D_index(idx, n_rows):
 
 
 def update_prototype(old_prototype, eta, vector):
-    new_prototype = (1 - eta) * old_prototype + eta * vector
+    a = [x * (1-eta) for x in old_prototype]
+    b = [y * eta for y in vector]
+    new_prototype = a + b
     return new_prototype
 
 
