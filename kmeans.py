@@ -108,7 +108,7 @@ class KMeans:
         :return: None
         """
         ## Create a list containing the ID of all vectors randomly split in K clusters
-        random_values = random.sample(range(1, len(self.traindata) - 1), len(self.clusters))
+        random_values = random.sample(range(1, len(self.traindata) - 1), len(self.clusters) - 1)
         ## Add 0 and maximum index as points of reference
         random_values.append(0)
         random_values.append(len(self.traindata))
