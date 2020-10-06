@@ -68,7 +68,18 @@ class Kohonen:
         # Step 4: All nodes within the neighbourhood of the BMU are changed,
         # you don't have to use distance relative learning. Since training kohonen maps can take
         # quite a while, presenting the user with a progress bar would be nice
+
         pass
+
+    def check_prototypes_in_radious(self):
+        r = (self.n * self.n)/2
+        for array in self.clusters:
+            for cluster in array:
+                if r < compute_distence(cluster.prototype, self.BMU):
+                    #save them somewhere
+
+
+    def compute_distance():
 
     def test(self):
         # iterate along all clients
