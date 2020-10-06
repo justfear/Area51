@@ -28,6 +28,11 @@ def find_2D_index(idx, n_rows):
     return idx // n_rows, idx % n_rows
 
 
+def update_prototype(old_prototype, eta, vector):
+    new_prototype = (1 - eta) * old_prototype + eta * vector
+    return new_prototype
+
+
 class Cluster:
     """This class represents the clusters, it contains the
     prototype (the mean of all it's members) and memberlists with the
@@ -52,7 +57,6 @@ class Cluster:
 
         return [x / len(self.current_members) for x in prototype]
 
-
 class Kohonen:
     def __init__(self, n, epochs, traindata, testdata, dim):
         self.n = n
@@ -64,7 +68,6 @@ class Kohonen:
         # A 2-dimensional list of clusters. Size == N x N
         self.clusters = [[Cluster(traindata) for _ in range(n)] for _ in range(n)]
         self.bmu_matrix = []
-        self.neighbourhood_nodes = []
         # Threshold above which the corresponding html is prefetched
         self.prefetch_threshold = 0.5
         self.initial_learning_rate = 0.8  ## eta
@@ -83,8 +86,8 @@ class Kohonen:
             ## Step 3: Every input vector is presented to the map (always in the same
             ## order) For each vector its Best Matching Unit is found, and
             ## each cluster in the vector's neighborhood is found:
-            self.find_closest_or_in_radius(radius, self.traindata, self.clusters, self.bmu_matrix, False)
-            self.find_closest_or_in_radius(radius, self.bmu_matrix, self.clusters, self.neighbourhood_nodes, True)
+            self.find_closest_or_in_radius(eta, radius, self.traindata, self.clusters, False)
+            self.find_closest_or_in_radius(eta, radius, self.bmu_matrix, self.clusters,  True)
             # Step 4: All nodes within the neighbourhood of the BMU are changed,
             # you don't have to use distance relative learning.
 
@@ -119,21 +122,23 @@ class Kohonen:
             for j in range(self.n):
                 print("Prototype cluster", (i, j), ":", self.clusters[i][j].prototype)
 
-    def find_closest_or_in_radius(self, radius, one_d_matrix, two_d_matrix, results_matrix, neighbors):
+    def find_closest_or_in_radius(self, eta, radius, one_d_matrix, two_d_matrix, neighbors):
         for vector in one_d_matrix:
             distance_matrix = []
             for row in two_d_matrix:
                 for element in row:
                     distance_matrix.append(distance(vector, element))
             if neighbors:
-                results_matrix.append([idx for idx in range(len(distance_matrix))
-                                       if distance_matrix[idx] < radius])
+                self.update_neighbours([idx for idx in range(len(distance_matrix)) if distance_matrix[idx] < radius],
+                                       eta,
+                                       self.traindata[one_d_matrix.index(vector)])
             else:
                 best_idx = distance_matrix.index(min(distance_matrix))
                 idx_1, idx_2 = find_2D_index(best_idx, self.n)
-                results_matrix.append(two_d_matrix[idx_1][idx_2])
+                self.bmu_matrix.append(two_d_matrix[idx_1][idx_2])
 
-
-def find_new_prototype(old_prototype, eta, vector):
-    new_prototype = (1 - eta) * old_prototype + eta * vector
-    return new_prototype
+    def update_neighbours(self, neighbour_list, eta, vector):
+        for idx in neighbour_list:
+            idx_1, idx_2 = find_2D_index(idx, self.n)
+            neighbour = self.clusters[idx_1][idx_2]
+            update_prototype(neighbour.prototype, eta, vector)
