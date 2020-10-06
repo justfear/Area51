@@ -15,8 +15,10 @@ def distance(vector, prototype):
         total += pow(x - p, 2)
         return math.sqrt(total)
 
+
 def find_2D_index(idx, n_rows):
     return idx // n_rows, (idx % n_rows) - 1
+
 
 class Cluster:
     """This class represents the clusters, it contains the
@@ -52,10 +54,12 @@ class Kohonen:
 
         # A 2-dimensional list of clusters. Size == N x N
         self.clusters = [[Cluster(traindata) for _ in range(n)] for _ in range(n)]
+        self.bmu_matrix = []
+        self.neighbourhood_nodes = []
         # Threshold above which the corresponding html is prefetched
         self.prefetch_threshold = 0.5
-        self.initial_learning_rate = 0.8 ## eta
-        self.square_size = (n * n) / 2 ## r
+        self.initial_learning_rate = 0.8  ## eta
+        self.square_size = (n * n) / 2  ## r
         # The accuracy and hitrate are the performance metrics (i.e. the results)
         self.accuracy = 0
         self.hitrate = 0
@@ -67,24 +71,15 @@ class Kohonen:
             # linearly with the number of epochs.
             self.square_size /= epoch
             self.initial_learning_rate /= epoch
-            # Step 3: Every input vector is presented to the map (always in the same
-            # order) For each vector its Best Matching Unit is found, and :
-
+            ## Step 3: Every input vector is presented to the map (always in the same
+            ## order) For each vector its Best Matching Unit is found, and
+            ## each cluster in the vector's neighborhood is found:
+            self.find_closest(self.traindata, self.clusters, self.bmu_matrix)
+            self.find_closest(self.bmu_matrix, self.clusters, self.neighbourhood_nodes)
         # Step 4: All nodes within the neighbourhood of the BMU are changed,
-        # you don't have to use distance relative learning. Since training kohonen maps can take
-        # quite a while, presenting the user with a progress bar would be nice
+        # you don't have to use distance relative learning.
 
-        pass
-
-    def find_best(self, list1, list2, list3):
-        for vector in list1:
-            distance_matrix = []
-            for row in list2:
-                for element in row:
-                    distance_matrix.append(distance(vector, element))
-            best_idx = distance_matrix.index(min(distance_matrix))
-            idx_1, idx_2 = find_2D_index(best_idx, self.n)
-            list3.append(list2[idx_1][idx_2])
+        # Since training kohonen maps can take quite a while, presenting the user with a progress bar would be nice
 
     def test(self):
         # iterate along all clients
@@ -112,3 +107,13 @@ class Kohonen:
         for i in range(self.n):
             for j in range(self.n):
                 print("Prototype cluster", (i, j), ":", self.clusters[i][j].prototype)
+
+    def find_closest(self, one_d_matrix, two_d_matrix, results_matrix):
+        for vector in one_d_matrix:
+            distance_matrix = []
+            for row in two_d_matrix:
+                for element in row:
+                    distance_matrix.append(distance(vector, element))
+            best_idx = distance_matrix.index(min(distance_matrix))
+            idx_1, idx_2 = find_2D_index(best_idx, self.n)
+            results_matrix.append(two_d_matrix[idx_1][idx_2])
