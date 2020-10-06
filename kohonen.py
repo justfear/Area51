@@ -44,8 +44,8 @@ class Kohonen:
         self.hitrate = 0
 
     def train(self):
-        # Step 1: initialize map with random vectors (A good place to do this, is in the initialisation of the
-        # clusters) Repeat 'epochs' times:
+        # Repeat 'epochs' times:
+        for epoch in self.epochs:
         # Step 2: Calculate the squareSize and the learningRate, these decrease
         # linearly with the number of epochs.
         # Step 3: Every input vector is presented to the map (always in the same
