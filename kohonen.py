@@ -15,6 +15,7 @@ def distance(vector, prototype):
         total += pow(x - p, 2)
         return math.sqrt(total)
 
+def
 
 class Cluster:
     """This class represents the clusters, it contains the
@@ -74,11 +75,14 @@ class Kohonen:
 
         pass
 
-    def check_prototypes_in_radius(self):
-        for array in self.clusters:
-            for cluster in array:
-                if self.square_size < compute_distance(cluster.prototype, self.BMU):
-                    # save them somewhere
+    def find_best(self, list1, list2):
+        for vector in list1:
+            distance_matrix = []
+            for row in list2:
+                for element in row:
+                    distance_matrix.append(distance(vector, element))
+            best_idx = distance_matrix.index(min(distance_matrix))
+
 
     def compute_distance():
 
