@@ -127,7 +127,10 @@ class Kohonen:
             distance_matrix = []
             for row in two_d_matrix:
                 for element in row:
-                    distance_matrix.append(distance(vector, element))
+                    if neighbors:
+                        distance_matrix.append(distance(vector.prototype, element.prototype))
+                    else:
+                        distance_matrix.append(distance(vector, element.prototype))
             if neighbors:
                 self.update_neighbours([idx for idx in range(len(distance_matrix)) if distance_matrix[idx] < radius],
                                        eta,
