@@ -71,7 +71,6 @@ class KMeans:
         ## Set prototype_start boolean to True
         ## Finish prototype computation (divide the summed vectors)
         while not self.check_equal():
-
             ## Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
             ## Simultaneously begin the computation of the prototype
             self.compare_distances()
@@ -155,10 +154,13 @@ class KMeans:
         check = True
         for cluster in self.clusters:
             if cluster.beginning:
-                cluster.beginning = False
-                check = False
+                for cluster in self.clusters:
+                    cluster.beginning = False
+                return False
             ## Reset the prototype_start boolean
             cluster.prototype_start = True
+            print(cluster.current_members)
+            print(cluster.previous_members)
             ## Finalize the calculation of the average of the summed vectors in each cluster (prototype calculation)
             cluster.prototype = [x / len(cluster.current_members) for x in cluster.prototype]
             ## Check whether membership has stabilized in all clusters
