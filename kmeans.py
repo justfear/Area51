@@ -153,6 +153,7 @@ class KMeans:
         """
         check = True
         for cluster in self.clusters:
+            ## If we just initialized the clusters, then instantly return False, and update the beginning boolean
             if cluster.beginning:
                 for cluster in self.clusters:
                     cluster.beginning = False
