@@ -76,16 +76,15 @@ class Kohonen:
 
         pass
 
-    def find_best(self, list1, list2):
+    def find_best(self, list1, list2, list3):
         for vector in list1:
             distance_matrix = []
             for row in list2:
                 for element in row:
                     distance_matrix.append(distance(vector, element))
             best_idx = distance_matrix.index(min(distance_matrix))
-
-
-    def compute_distance():
+            idx_1, idx_2 = find_2D_index(best_idx, self.n)
+            list3.append(list2[idx_1][idx_2])
 
     def test(self):
         # iterate along all clients
