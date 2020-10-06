@@ -8,6 +8,7 @@ def distance(vector, prototype):
     Calculates the Euclidean distance between a given data vector and a prototype vector
     :param vector: The specified data vector
     :param prototype: The specified prototype vector
+
     :return: The linear distance between the two vectors
     """
     total = 0
@@ -17,6 +18,13 @@ def distance(vector, prototype):
 
 
 def find_2D_index(idx, n_rows):
+    """
+    Finds the 2-D index equivalent of a one dimensional index in a n * n matrix
+    :param idx: The one dimensional index which we want to convert to two dimensions
+    :param n_rows: The number of rows (n) in an n * n matrix
+
+    :return: The 2-D equivalent of the 1D index
+    """
     return idx // n_rows, idx % n_rows
 
 
@@ -27,7 +35,7 @@ class Cluster:
     of that cluster."""
 
     def __init__(self, traindata):
-        ## Step 1:
+        ## Step 1 Initialise clusters randomly from the data:
         self.current_members = set(random.sample(range(len(traindata) - 1), 1))
         self.prototype = self.compute_prototype(traindata)
 
@@ -81,8 +89,8 @@ class Kohonen:
             # you don't have to use distance relative learning.
 
             ## Step 5: Calculate the new learning rate and radius
-            radius = self.initial_radius * (1 - (self.epochs/epoch))
-            eta = self.initial_learning_rate * (1 - (self.epochs/epoch))
+            radius = self.initial_radius * (1 - (self.epochs / epoch))
+            eta = self.initial_learning_rate * (1 - (self.epochs / epoch))
 
     def test(self):
         # iterate along all clients
