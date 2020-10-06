@@ -19,6 +19,12 @@ class Cluster:
 
 
 def distance(vector, prototype):
+    """
+    Calculates the Euclidean distance between a given data vector and a prototype vector
+    :param vector: The specified data vector
+    :param prototype: The specified prototype vector
+    :return: The linear distance between the two vectors
+    """
     total = 0
     for x, p in zip(vector, prototype):
         total += pow(x - p, 2)
@@ -26,6 +32,12 @@ def distance(vector, prototype):
 
 
 def prototype_computation(cluster, vector):
+    """
+    Adds a given vector to the prototype variable of a given cluster for the prototype calculation
+    :param cluster: The specified cluster
+    :param vector: The specified vector
+    :return: None
+    """
     ## If we are iterating through the first vector ID in the cluster, make it equal to the prototype variable
     if cluster.prototype_start:
         cluster.prototype = vector
@@ -113,6 +125,12 @@ class KMeans:
             idx += 1
 
     def compare_distances(self):
+        """
+        Finds cluster closest to each vector and assigns vectors to said cluster.
+        Simultaneously sums up assigned vectors to their respective cluster prototype.
+
+        :return: None
+        """
         for vector in self.traindata:
             distance_matrix = []
             for cluster in self.clusters:
@@ -127,6 +145,12 @@ class KMeans:
             prototype_computation(self.clusters[cluster_idx], vector)
 
     def check_equal(self):
+        """
+        Resets prototype booleans, finalizes the prototype calculation
+        and checks for membership stabilization for each cluster.
+
+        :return: True if membership has stabilized, otherwise False
+        """
         check = True
         for cluster in self.clusters:
             ## Reset the prototype_start boolean
