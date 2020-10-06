@@ -17,7 +17,7 @@ def distance(vector, prototype):
 
 
 def find_2D_index(idx, n_rows):
-    return idx // n_rows, (idx % n_rows) - 1
+    return idx // n_rows, idx % n_rows
 
 
 class Cluster:
@@ -114,6 +114,6 @@ class Kohonen:
             for row in two_d_matrix:
                 for element in row:
                     distance_matrix.append(distance(vector, element))
-            best_idx = distance_matrix.index(min(distance_matrix)) + 1
+            best_idx = distance_matrix.index(min(distance_matrix))
             idx_1, idx_2 = find_2D_index(best_idx, self.n)
             results_matrix.append(two_d_matrix[idx_1][idx_2])
