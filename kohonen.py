@@ -15,7 +15,8 @@ def distance(vector, prototype):
         total += pow(x - p, 2)
         return math.sqrt(total)
 
-def
+def find_2D_index(idx, n_rows):
+    return idx // n_rows, (idx % n_rows) - 1
 
 class Cluster:
     """This class represents the clusters, it contains the
