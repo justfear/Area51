@@ -141,8 +141,6 @@ class Kohonen:
                                        self.traindata[one_d_matrix.index(vector)])
             else:
                 best_idx = distance_matrix.index(min(distance_matrix))
-                #print("matrix:", distance_matrix)
-                print("bestidx:", best_idx)
                 idx_1, idx_2 = find_2D_index(best_idx, self.n)
                 self.bmu_matrix.append(two_d_matrix[idx_1][idx_2])
 

@@ -2,6 +2,7 @@
 import random
 import operator
 import math
+import copy
 
 
 class Cluster:
@@ -20,7 +21,7 @@ class Cluster:
 
     def update_member_sets(self):
         ## Move the current member set to previous, and clear the current member set
-        self.previous_members = self.current_members
+        self.previous_members = copy.deepcopy(self.current_members)
         ## It does not matter if the membership has stabilized since both sets would be the same anyways
         self.current_members.clear()
 
@@ -170,6 +171,7 @@ class KMeans:
             ## Finalize the calculation of the average of the summed vectors in each cluster (prototype calculation)
             cluster.prototype = [x / len(cluster.current_members) for x in cluster.prototype]
             ## Check whether membership has stabilized in all clusters
+            print(cluster.current_members, cluster.previous_members)
             for current, previous in zip(cluster.current_members, cluster.previous_members):
                 if current != previous:
                     check = False
