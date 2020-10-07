@@ -171,7 +171,6 @@ class Kohonen:
                 if idx in cluster.current_members:
                     return cluster, self.testdata[idx]
 
-
     def find_closest_or_in_radius(self, eta, radius, one_d_matrix, two_d_matrix, neighbours):
         """
         Computes the BMU for any given vector or updates prototypes in the radius of a BMU.
