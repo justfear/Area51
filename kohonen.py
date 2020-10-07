@@ -31,8 +31,7 @@ def find_2D_index(idx, n_rows):
 def update_prototype(old_prototype, eta, vector):
     a = [x * (1-eta) for x in old_prototype]
     b = [y * eta for y in vector]
-    new_prototype = a + b
-    return new_prototype
+    return list(map(operator.add, a, b))
 
 
 class Cluster:
