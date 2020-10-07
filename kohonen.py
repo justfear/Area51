@@ -40,9 +40,18 @@ def find_1D_index(row_idx, col_idx, n):
     return (n * row_idx) + col_idx
 
 
-def update_prototype(old_prototype, eta, vector):
+def update_prototype(old_prototype, eta, input_vector):
+    """
+    Performs the update equation for a given prototype vector, learning rate value and input vector in order to make
+    the prototype vector more similar.
+    :param old_prototype: The specified old prototype vector pre-update
+    :param eta: The given learning rate value
+    :param input_vector: The input vector to which we are assimilating the prototye
+
+    :return: The newly updated prototype vector
+    """
     a = [x * (1 - eta) for x in old_prototype]
-    b = [y * eta for y in vector]
+    b = [y * eta for y in input_vector]
     return list(map(operator.add, a, b))
 
 
@@ -58,6 +67,12 @@ class Cluster:
         self.prototype = self.compute_prototype(traindata)
 
     def compute_prototype(self, traindata):
+        """
+        Computes the prototype vector (mean of all member vectors) based on the memberset of a given cluster
+        :param traindata: The training data from which to take the member vectors
+
+        :return: The prototype vector for the specified cluster
+        """
         first = True
         prototype = []
         for idx in self.current_members:
@@ -140,16 +155,26 @@ class Kohonen:
             for j in range(self.n):
                 print("Prototype cluster", (i, j), ":", self.clusters[i][j].prototype)
 
-    def find_closest_or_in_radius(self, eta, radius, one_d_matrix, two_d_matrix, neighbors):
+    def find_closest_or_in_radius(self, eta, radius, one_d_matrix, two_d_matrix, neighbours):
+        """
+        Computes the BMU for any given vector or updates prototypes in the radius of a BMU.
+        :param eta: The learning rate value of the algorithm
+        :param radius: The radius within which vectors are considered neighbors of the BMU
+        :param one_d_matrix: The training data if computing BMU, otherwise the BMU matrix if updating neighbours
+        :param two_d_matrix: An n * n matrix of clusters
+        :param neighbors: True if finding/updating neighbours, False if computing BMU
+
+        :return: None
+        """
         for vector in one_d_matrix:
             distance_matrix = []
             for row in two_d_matrix:
                 for element in row:
-                    if neighbors:
+                    if neighbours:
                         distance_matrix.append(distance(vector.prototype, element.prototype))
                     else:
                         distance_matrix.append(distance(vector, element.prototype))
-            if neighbors:
+            if neighbours:
                 self.update_neighbours([idx for idx in range(len(distance_matrix)) if distance_matrix[idx] < radius],
                                        eta,
                                        self.traindata[one_d_matrix.index(vector)])
@@ -159,6 +184,14 @@ class Kohonen:
                 self.bmu_matrix.append(two_d_matrix[idx_1][idx_2])
 
     def update_neighbours(self, neighbour_list, eta, vector):
+        """
+        Updates all neighbours in a given list of neighbours for a given data vector and learning rate value
+        :param neighbour_list: The specified list of neighbours
+        :param eta: The specified learning rate value
+        :param vector: The specified data vector
+
+        :return: None
+        """
         for idx in neighbour_list:
             idx_1, idx_2 = find_2D_index(idx, self.n)
             neighbour = self.clusters[idx_1][idx_2]
@@ -166,8 +199,8 @@ class Kohonen:
 
     def create_random_clusters(self):
         """
-        Partitions all data vectors into randomly split clusters, computes prototypes simultaneously
-        :param idx: Always starts at 1, a point of reference for the indexing of numbers in the random_values list
+        Creates a randomized reference list which can be used to partition the data into n * n clusters
+
         :return: None
         """
         ## Create a list containing the ID of all vectors randomly split in K clusters
