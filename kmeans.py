@@ -97,7 +97,7 @@ class KMeans:
             ## For each client find the cluster of which it is a member and
             ## get the actual testData (the vector) of this client
             cluster, test_data_vector = self.find_cluster(client)
-            for request, prediction  in zip(test_data_vector, cluster.prototype):
+            for request, prediction in zip(test_data_vector, cluster.prototype):
                 ## Count number of useful requests
                 if prediction > self.prefetch_threshold and request == 1:
                     useful_prefetched_urls += 1
@@ -105,8 +105,8 @@ class KMeans:
                 elif prediction > self.prefetch_threshold and request == 0:
                     non_useful_prefetched_urls += 1
         ## Set the global variables hitrate and accuracy to their appropriate value
-        self.accuracy = useful_prefetched_urls / useful_prefetched_urls + non_useful_prefetched_urls
-        self.hitrate = useful_prefetched_urls + non_useful_prefetched_urls / len(self.requests)
+        self.accuracy = (useful_prefetched_urls / (useful_prefetched_urls + non_useful_prefetched_urls)) / len(self.clients)
+        self.hitrate = (useful_prefetched_urls / len(self.requests)) / len(self.clients)
 
 
 
