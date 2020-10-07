@@ -84,15 +84,13 @@ class Kohonen:
         eta = self.initial_learning_rate
         # Repeat 'epochs' times:
         for epoch in range(1, self.epochs):
-            print("epoch:", epoch, "radius:", radius, "eta:", eta)
+
             ## Step 3: Every input vector is presented to the map (always in the same
             ## order) For each vector its Best Matching Unit is found, and
             ## each cluster in the vector's neighborhood is found:
             self.find_closest_or_in_radius(eta, radius, self.traindata, self.clusters, False)
-            print("update")
             # Step 4: All nodes within the neighbourhood of the BMU are changed,
             # you don't have to use distance relative learning.
-            #self.print_prototypes()
             self.find_closest_or_in_radius(eta, radius, self.bmu_matrix, self.clusters, True)
             ## Step 5: Calculate the new learning rate and radius
             radius = self.initial_radius * (1 - (epoch / self.epochs))
