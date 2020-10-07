@@ -23,7 +23,7 @@ def find_2D_index(idx, n_rows):
     :param idx: The one dimensional index which we want to convert to two dimensions
     :param n_rows: The number of rows (n) in an n * n matrix
 
-    :return: The 2-D equivalent of the 1D index
+    :return: The 2-D equivalent of the 1-D index
     """
     return idx // n_rows, idx % n_rows
 
@@ -42,7 +42,7 @@ class Cluster:
 
     def __init__(self, traindata):
         ## Step 1 Initialise clusters randomly from the data:
-        self.current_members = set(random.sample(range(len(traindata) - 1), 1))
+        self.current_members = set(random.sample(range(len(traindata) - 1), random.randint(1, len(traindata) - 1)))
         self.prototype = self.compute_prototype(traindata)
 
     def compute_prototype(self, traindata):
@@ -84,17 +84,20 @@ class Kohonen:
         eta = self.initial_learning_rate
         # Repeat 'epochs' times:
         for epoch in range(1, self.epochs):
+            print("epoch:", epoch, "radius:", radius, "eta:", eta)
             ## Step 3: Every input vector is presented to the map (always in the same
             ## order) For each vector its Best Matching Unit is found, and
             ## each cluster in the vector's neighborhood is found:
             self.find_closest_or_in_radius(eta, radius, self.traindata, self.clusters, False)
-            self.find_closest_or_in_radius(eta, radius, self.bmu_matrix, self.clusters, True)
+            print("update")
             # Step 4: All nodes within the neighbourhood of the BMU are changed,
             # you don't have to use distance relative learning.
-
+            #self.print_prototypes()
+            self.find_closest_or_in_radius(eta, radius, self.bmu_matrix, self.clusters, True)
             ## Step 5: Calculate the new learning rate and radius
-            radius = self.initial_radius * (1 - (self.epochs / epoch))
-            eta = self.initial_learning_rate * (1 - (self.epochs / epoch))
+            radius = self.initial_radius * (1 - (epoch / self.epochs))
+            eta = self.initial_learning_rate * (1 - (epoch / self.epochs))
+            self.bmu_matrix.clear()
 
     def test(self):
         # iterate along all clients
@@ -138,6 +141,8 @@ class Kohonen:
                                        self.traindata[one_d_matrix.index(vector)])
             else:
                 best_idx = distance_matrix.index(min(distance_matrix))
+                #print("matrix:", distance_matrix)
+                print("bestidx:", best_idx)
                 idx_1, idx_2 = find_2D_index(best_idx, self.n)
                 self.bmu_matrix.append(two_d_matrix[idx_1][idx_2])
 
