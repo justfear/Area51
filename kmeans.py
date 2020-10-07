@@ -56,9 +56,11 @@ def prototype_computation(cluster, vector):
 
 
 class KMeans:
-    def __init__(self, k, traindata, testdata, dim):
+    def __init__(self, k, traindata, testdata, dim, clients, requests):
         self.traindata = traindata
         self.testdata = testdata
+        self.requests = requests
+        self.clients = clients
         self.dim = dim
 
         # Threshold above which the corresponding html is prefetched

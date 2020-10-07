@@ -19,9 +19,9 @@ def main():
     while True:
         algorithm = int(input("Run K-means (1), Kohonen SOM (2) or Quit(3) ? "))
         if algorithm == 1:
-            clustering_algorithm = kmeans_init(train, test, dim)
+            clustering_algorithm = kmeans_init(train, test, dim, clients, requests)
         elif algorithm == 2:
-            clustering_algorithm = kohonen_init(train, test, dim)
+            clustering_algorithm = kohonen_init(train, test, dim, clients, requests)
         elif algorithm == 3:
             exit()
         else:
@@ -144,17 +144,17 @@ def read_clients(filename):
     return clients
 
 
-def kmeans_init(train, test, dim):
+def kmeans_init(train, test, dim, clients, requests):
     k = None
     while not isinstance(k, int):
         try:
             k = int(input("How many clusters (k) ? "))
-            return KMeans(k, train, test, dim)
+            return KMeans(k, train, test, dim, clients, requests)
         except Exception as e:
             print("ERROR while trying to initialize KMeans: ", e)
 
 
-def kohonen_init(train, test, dim):
+def kohonen_init(train, test, dim, clients, requests):
     n = None
     while not isinstance(n, int):
         try:
@@ -166,7 +166,7 @@ def kohonen_init(train, test, dim):
     while not isinstance(epochs, int):
         try:
             epochs = int(input("Number of training epochs ? "))
-            return Kohonen(n, epochs, train, test, dim)
+            return Kohonen(n, epochs, train, test, dim, clients, requests)
         except Exception as e:
             print("ERROR while trying to initialize Kohonen: ", e)
 

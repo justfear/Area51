@@ -59,11 +59,13 @@ class Cluster:
 
 
 class Kohonen:
-    def __init__(self, n, epochs, traindata, testdata, dim):
+    def __init__(self, n, epochs, traindata, testdata, dim, clients, requests):
         self.n = n
         self.epochs = epochs  ## t_max
         self.traindata = traindata
         self.testdata = testdata
+        self.requests = requests
+        self.clients = clients
         self.dim = dim
 
         # A 2-dimensional list of clusters. Size == N x N
@@ -73,6 +75,7 @@ class Kohonen:
         self.prefetch_threshold = 0.5
         self.initial_learning_rate = 0.8  ## eta
         self.initial_radius = (n * n) / 2  ## radius
+
         # The accuracy and hitrate are the performance metrics (i.e. the results)
         self.accuracy = 0
         self.hitrate = 0
