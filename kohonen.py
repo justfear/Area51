@@ -114,6 +114,7 @@ class Kohonen:
         # linearly with the number of epochs.
         radius = self.initial_radius
         eta = self.initial_learning_rate
+
         # Repeat 'epochs' times:
         for epoch in range(1, self.epochs):
             ## Step 3: Every input vector is presented to the map (always in the same
@@ -129,15 +130,27 @@ class Kohonen:
             self.bmu_matrix.clear()
 
     def test(self):
-        # iterate along all clients
-        # for each client find the cluster of which it is a member
-        # get the actual testData (the vector) of this client
-        # iterate along all dimensions
-        # and count prefetched htmls
-        # count number of hits
-        # count number of requests
-        # set the global variables hitrate and accuracy to their appropriate value
-        pass
+
+        ## iterate along all clients. Assumption: the same clients are in the same order as in the testData
+        useful_prefetched_urls = 0
+        non_useful_prefetched_urls = 0
+        for client in self.clients:
+            ## For each client find the cluster of which it is a member and
+            ## get the actual testData (the vector) of this client
+            cluster, test_data_vector = self.find_cluster(client)
+            for request, prediction  in zip(test_data_vector, cluster.prototype):
+                ## Count number of useful requests
+                if prediction > self.prefetch_threshold and request == 1:
+                    useful_prefetched_urls += 1
+                ## Count number of non-useful requests
+                elif prediction > self.prefetch_threshold and request == 0:
+                    non_useful_prefetched_urls += 1
+        ## Set the global variables hitrate and accuracy to their appropriate value
+        print(non_useful_prefetched_urls)
+        print(useful_prefetched_urls)
+        print(len(self.requests))
+        self.accuracy = useful_prefetched_urls / (useful_prefetched_urls + non_useful_prefetched_urls)
+        self.hitrate = (useful_prefetched_urls + non_useful_prefetched_urls) / (len(self.requests) * len(self.testdata))
 
     def print_test(self):
         print("Prefetch threshold =", self.prefetch_threshold)
@@ -154,6 +167,14 @@ class Kohonen:
         for i in range(self.n):
             for j in range(self.n):
                 print("Prototype cluster", (i, j), ":", self.clusters[i][j].prototype)
+
+    def find_cluster(self, client):
+        idx = self.clients.index(client)
+        for row in self.clusters:
+            for cluster in row:
+                if idx in cluster.current_members:
+                    return cluster, self.testdata[idx]
+
 
     def find_closest_or_in_radius(self, eta, radius, one_d_matrix, two_d_matrix, neighbours):
         """
