@@ -82,11 +82,21 @@ class KMeans:
         while not self.check_equal():
             print(i)
             i += 1
+            print(self.clusters[0].previous_members)
+            print(self.clusters[1].previous_members)
             ## Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
             ## Simultaneously begin the computation of the prototype
             self.compare_distances()
 
     def test(self):
+        print(len(self.clients))
+        for client in self.clients:
+            cluster, vector = self.find_cluster(client)
+            for dimension, whatever in zip(vector, cluster.prototype):
+                if whatever > self.prefetch_threshold:
+                    f = whatever
+
+
         # iterate along all clients. Assumption: the same clients are in the same order as in the testData
         # for each client find the cluster of which it is a member
         # get the actual testData (the vector) of this client
@@ -96,6 +106,8 @@ class KMeans:
         # count number of requests
         # set the global variables hitrate and accuracy to their appropriate value
         pass
+
+
 
     def print_test(self):
         print("Prefetch threshold =", self.prefetch_threshold)
@@ -110,6 +122,13 @@ class KMeans:
     def print_prototypes(self):
         for i, cluster in enumerate(self.clusters):
             print("Prototype cluster", i, ":", cluster.prototype)
+
+    def find_cluster(self, client):
+        idx = self.clients.index(client)
+        for cluster in self.clusters:
+            if idx in cluster.current_members:
+                return cluster, self.testdata[idx]
+
 
     def create_random_clusters(self, idx):
         """
