@@ -89,15 +89,14 @@ class KMeans:
             self.compare_distances()
 
     def test(self):
-
-        ## iterate along all clients. Assumption: the same clients are in the same order as in the testData
+        ## Iterate along all clients. Assumption: the same clients are in the same order as in the testData
         useful_prefetched_urls = 0
         non_useful_prefetched_urls = 0
         for client in self.clients:
             ## For each client find the cluster of which it is a member and
             ## get the actual testData (the vector) of this client
             cluster, test_data_vector = self.find_cluster(client)
-            for request, prediction  in zip(test_data_vector, cluster.prototype):
+            for request, prediction in zip(test_data_vector, cluster.prototype):
                 ## Count number of useful requests
                 if prediction > self.prefetch_threshold and request == 1:
                     useful_prefetched_urls += 1
@@ -105,9 +104,6 @@ class KMeans:
                 elif prediction > self.prefetch_threshold and request == 0:
                     non_useful_prefetched_urls += 1
         ## Set the global variables hitrate and accuracy to their appropriate value
-        print(non_useful_prefetched_urls)
-        print(useful_prefetched_urls)
-        print(len(self.requests))
         self.accuracy = useful_prefetched_urls / (useful_prefetched_urls + non_useful_prefetched_urls)
         self.hitrate = (useful_prefetched_urls + non_useful_prefetched_urls) / (len(self.requests) * len(self.testdata))
 
@@ -131,7 +127,6 @@ class KMeans:
         for cluster in self.clusters:
             if idx in cluster.current_members:
                 return cluster, self.testdata[idx]
-
 
     def create_random_clusters(self, idx):
         """
