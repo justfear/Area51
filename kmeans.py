@@ -105,8 +105,11 @@ class KMeans:
                 elif prediction > self.prefetch_threshold and request == 0:
                     non_useful_prefetched_urls += 1
         ## Set the global variables hitrate and accuracy to their appropriate value
-        self.accuracy = useful_prefetched_urls / useful_prefetched_urls + non_useful_prefetched_urls
-        self.hitrate = useful_prefetched_urls + non_useful_prefetched_urls / len(self.requests)
+        print(non_useful_prefetched_urls)
+        print(useful_prefetched_urls)
+        print(len(self.requests))
+        self.accuracy = useful_prefetched_urls / (useful_prefetched_urls + non_useful_prefetched_urls)
+        self.hitrate = (useful_prefetched_urls + non_useful_prefetched_urls) / (len(self.requests) * len(self.testdata))
 
 
 
