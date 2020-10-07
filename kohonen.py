@@ -27,8 +27,21 @@ def find_2D_index(idx, n_rows):
     """
     return idx // n_rows, idx % n_rows
 
+
+def find_1D_index(row_idx, col_idx, n):
+    """
+    Finds the 1-D index equivalent of a given two-dimensional index in an n * n matrix
+    :param n: The number of rows/columns in the matrix
+    :param row_idx: The given index for the rows of a 2D matrix
+    :param col_idx: The given index for the columns of the 2D matrix
+
+    :return: The 1-D equivalent of the 2-D index
+    """
+    return (n * row_idx) + col_idx
+
+
 def update_prototype(old_prototype, eta, vector):
-    a = [x * (1-eta) for x in old_prototype]
+    a = [x * (1 - eta) for x in old_prototype]
     b = [y * eta for y in vector]
     return list(map(operator.add, a, b))
 
@@ -43,7 +56,6 @@ class Cluster:
         ## Step 1 Initialise clusters randomly from the data:
         self.current_members = set([i for i in range(random_values[idx], random_values[idx + 1])])
         self.prototype = self.compute_prototype(traindata)
-
 
     def compute_prototype(self, traindata):
         first = True
@@ -70,7 +82,8 @@ class Kohonen:
 
         self.random_values = self.create_random_clusters()
         # A 2-dimensional list of clusters. Size == N x N
-        self.clusters = [[Cluster(traindata, idx, self.random_values) for idx in range(n)] for _ in range(n)]
+        self.clusters = [[Cluster(traindata, find_1D_index(row_idx, col_idx, self.n), self.random_values)
+                          for col_idx in range(n)] for row_idx in range(n)]
         self.bmu_matrix = []
         # Threshold above which the corresponding html is prefetched
         self.prefetch_threshold = 0.5
@@ -81,7 +94,6 @@ class Kohonen:
         self.accuracy = 0
         self.hitrate = 0
 
-
     def train(self):
         # Step 2: Calculate the squareSize and the learningRate, these decrease
         # linearly with the number of epochs.
@@ -89,7 +101,6 @@ class Kohonen:
         eta = self.initial_learning_rate
         # Repeat 'epochs' times:
         for epoch in range(1, self.epochs):
-
             ## Step 3: Every input vector is presented to the map (always in the same
             ## order) For each vector its Best Matching Unit is found, and
             ## each cluster in the vector's neighborhood is found:
