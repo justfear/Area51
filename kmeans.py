@@ -89,23 +89,26 @@ class KMeans:
             self.compare_distances()
 
     def test(self):
-        print(len(self.clients))
+
+        ## iterate along all clients. Assumption: the same clients are in the same order as in the testData
+        useful_prefetched_urls = 0
+        non_useful_prefetched_urls = 0
         for client in self.clients:
-            cluster, vector = self.find_cluster(client)
-            for dimension, whatever in zip(vector, cluster.prototype):
-                if whatever > self.prefetch_threshold:
-                    f = whatever
+            ## For each client find the cluster of which it is a member and
+            ## get the actual testData (the vector) of this client
+            cluster, test_data_vector = self.find_cluster(client)
+            for request, prediction  in zip(test_data_vector, cluster.prototype):
+                ## Count number of useful requests
+                if prediction > self.prefetch_threshold and request == 1:
+                    useful_prefetched_urls += 1
+                ## Count number of non-useful requests
+                elif prediction > self.prefetch_threshold and request == 0:
+                    non_useful_prefetched_urls += 1
+        ## Set the global variables hitrate and accuracy to their appropriate value
+        self.accuracy = useful_prefetched_urls / useful_prefetched_urls + non_useful_prefetched_urls
+        self.hitrate = useful_prefetched_urls + non_useful_prefetched_urls / len(self.requests)
 
 
-        # iterate along all clients. Assumption: the same clients are in the same order as in the testData
-        # for each client find the cluster of which it is a member
-        # get the actual testData (the vector) of this client
-        # iterate along all dimensions
-        # and count prefetched htmls
-        # count number of hits
-        # count number of requests
-        # set the global variables hitrate and accuracy to their appropriate value
-        pass
 
 
 
