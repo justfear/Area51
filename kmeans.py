@@ -73,11 +73,13 @@ class KMeans:
     def train(self):
         ## Step 1: Select an initial random partitioning with k clusters
         self.create_random_clusters(1)
-
+        i = 0
         ## Repeat loop while membership has not stabilized
         ## Set prototype_start boolean to True
         ## Finish prototype computation (divide the summed vectors)
         while not self.check_equal():
+            print(i)
+            i += 1
             ## Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
             ## Simultaneously begin the computation of the prototype
             self.compare_distances()
@@ -170,8 +172,10 @@ class KMeans:
             cluster.prototype_start = True
             ## Finalize the calculation of the average of the summed vectors in each cluster (prototype calculation)
             cluster.prototype = [x / len(cluster.current_members) for x in cluster.prototype]
+            ## Sort both sets to make sure everything is in the same order
+            cluster.previous_members = set(sorted(cluster.previous_members))
+            cluster.current_members = set(sorted(cluster.current_members))
             ## Check whether membership has stabilized in all clusters
-            print(cluster.current_members, cluster.previous_members)
             for current, previous in zip(cluster.current_members, cluster.previous_members):
                 if current != previous:
                     check = False
