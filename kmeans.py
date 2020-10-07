@@ -179,5 +179,6 @@ class KMeans:
             for current, previous in zip(cluster.current_members, cluster.previous_members):
                 if current != previous:
                     check = False
-            cluster.update_member_sets()
+            if not check:
+                cluster.update_member_sets()
         return check
