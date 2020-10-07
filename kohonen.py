@@ -27,7 +27,6 @@ def find_2D_index(idx, n_rows):
     """
     return idx // n_rows, idx % n_rows
 
-
 def update_prototype(old_prototype, eta, vector):
     a = [x * (1-eta) for x in old_prototype]
     b = [y * eta for y in vector]
@@ -40,10 +39,11 @@ class Cluster:
     ID's (which are Integer objects) of the datapoints that are member
     of that cluster."""
 
-    def __init__(self, traindata):
+    def __init__(self, traindata, idx, random_values):
         ## Step 1 Initialise clusters randomly from the data:
-        self.current_members = set(random.sample(range(len(traindata) - 1), random.randint(1, len(traindata) - 1)))
+        self.current_members = set([i for i in range(random_values[idx], random_values[idx + 1])])
         self.prototype = self.compute_prototype(traindata)
+
 
     def compute_prototype(self, traindata):
         first = True
@@ -68,8 +68,9 @@ class Kohonen:
         self.clients = clients
         self.dim = dim
 
+        self.random_values = self.create_random_clusters()
         # A 2-dimensional list of clusters. Size == N x N
-        self.clusters = [[Cluster(traindata) for _ in range(n)] for _ in range(n)]
+        self.clusters = [[Cluster(traindata, idx, self.random_values) for idx in range(n)] for _ in range(n)]
         self.bmu_matrix = []
         # Threshold above which the corresponding html is prefetched
         self.prefetch_threshold = 0.5
@@ -79,6 +80,7 @@ class Kohonen:
         # The accuracy and hitrate are the performance metrics (i.e. the results)
         self.accuracy = 0
         self.hitrate = 0
+
 
     def train(self):
         # Step 2: Calculate the squareSize and the learningRate, these decrease
@@ -150,3 +152,19 @@ class Kohonen:
             idx_1, idx_2 = find_2D_index(idx, self.n)
             neighbour = self.clusters[idx_1][idx_2]
             update_prototype(neighbour.prototype, eta, vector)
+
+    def create_random_clusters(self):
+        """
+        Partitions all data vectors into randomly split clusters, computes prototypes simultaneously
+        :param idx: Always starts at 1, a point of reference for the indexing of numbers in the random_values list
+        :return: None
+        """
+        ## Create a list containing the ID of all vectors randomly split in K clusters
+        random_values = random.sample(range(1, len(self.traindata) - 1), (self.n * self.n) - 1)
+        ## Add 0 and maximum index as points of reference
+        random_values.append(0)
+        random_values.append(len(self.traindata))
+        ## Sort values in ascending order
+        random_values.sort()
+
+        return random_values
