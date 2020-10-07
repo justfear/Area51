@@ -64,7 +64,7 @@ class KMeans:
         self.dim = dim
 
         # Threshold above which the corresponding html is prefetched
-        self.prefetch_threshold = 0.5
+        self.prefetch_threshold = 0.1
         # An initialized list of k clusters
         self.clusters = [Cluster(dim) for _ in range(k)]
 
@@ -110,9 +110,6 @@ class KMeans:
         print(len(self.requests))
         self.accuracy = useful_prefetched_urls / (useful_prefetched_urls + non_useful_prefetched_urls)
         self.hitrate = (useful_prefetched_urls + non_useful_prefetched_urls) / (len(self.requests) * len(self.testdata))
-
-
-
 
 
     def print_test(self):
