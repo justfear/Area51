@@ -78,15 +78,10 @@ class KMeans:
     def train(self):
         ## Step 1: Select an initial random partitioning with k clusters
         self.create_random_clusters(1)
-        i = 0
         ## Repeat loop while membership has not stabilized
         ## Set prototype_start boolean to True
         ## Finish prototype computation (divide the summed vectors)
         while not self.check_equal():
-            print(i)
-            i += 1
-            print(self.clusters[0].previous_members)
-            print(self.clusters[1].previous_members)
             ## Step 2: Generate a new partition by assigning each datapoint to its closest cluster center
             ## Simultaneously begin the computation of the prototype
             self.compare_distances()
@@ -109,7 +104,6 @@ class KMeans:
         ## Set the global variables hitrate and accuracy to their appropriate value
         self.accuracy = useful_prefetched_urls / (useful_prefetched_urls + non_useful_prefetched_urls)
         self.hitrate = (useful_prefetched_urls + non_useful_prefetched_urls) / (len(self.requests) * len(self.testdata))
-
 
     def print_test(self):
         """
@@ -163,7 +157,6 @@ class KMeans:
         random_values.append(len(self.traindata))
         ## Sort values in ascending order
         random_values.sort()
-        print("Random values:", random_values)
 
         for cluster in self.clusters:
             for i in range(random_values[idx - 1], random_values[idx]):
