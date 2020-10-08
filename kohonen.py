@@ -102,7 +102,7 @@ class Kohonen:
         self.bmu_matrix = []
         # Threshold above which the corresponding html is prefetched
         self.prefetch_threshold = 0.5
-        self.initial_learning_rate = 0.8  ## eta
+        self.initial_learning_rate = 0.05  ## eta
         self.initial_radius = (n * n) / 2  ## radius
 
         # The accuracy and hitrate are the performance metrics (i.e. the results)
@@ -118,10 +118,10 @@ class Kohonen:
         # Repeat 'epochs' times:
         for epoch in range(1, self.epochs):
             ## Step 3: Every input vector is presented to the map (always in the same
-            ## order) For each vector its Best Matching Unit is found, and
-            ## each cluster in the vector's neighborhood is found:
+            ## order) For each vector its Best Matching Unit is found,
             self.find_closest_or_in_radius(eta, radius, self.traindata, self.clusters, False)
-            # Step 4: All nodes within the neighbourhood of the BMU are changed,
+            ## Step 4: Each cluster in the vector's neighborhood is found and
+            ## all nodes within the neighbourhood of the BMU are changed,
             # you don't have to use distance relative learning.
             self.find_closest_or_in_radius(eta, radius, self.bmu_matrix, self.clusters, True)
             ## Step 5: Calculate the new learning rate and radius
@@ -150,7 +150,8 @@ class Kohonen:
 
     def print_test(self):
         """
-        prints the Prefetch threshold, hitrate, accuracy and sum of the hitrate and accuracy
+        Prints the prefetch threshold, hitrate, accuracy and sum of the hitrate and accuracy
+
         :return: None
         """
         print("Prefetch threshold =", self.prefetch_threshold)
@@ -160,7 +161,8 @@ class Kohonen:
 
     def print_members(self):
         """
-        prints every vector of each cluster
+        Prints every member vector of each cluster.
+
         :return: None
         """
         for i in range(self.n):
@@ -169,7 +171,8 @@ class Kohonen:
 
     def print_prototypes(self):
         """
-        prints prototypes of each cluster
+        prints the prototypes of each cluster.
+
         :return: None
         """
         for i in range(self.n):
@@ -178,9 +181,11 @@ class Kohonen:
 
     def find_cluster(self, client):
         """
-        Returns a cluster of the input client with client's assigned testdata vector
+        Locates and returns the corresponding test-data vector of the input client as well as the cluster in which it
+        pertains to.
         :param client: a specified client
-        :return: the cluster and the testdata vector of a client
+
+        :return: The cluster and the testdata vector of a client
         """
         idx = self.clients.index(client)
         for row in self.clusters:
@@ -195,22 +200,31 @@ class Kohonen:
         :param radius: The radius within which vectors are considered neighbors of the BMU
         :param one_d_matrix: The training data if computing BMU, otherwise the BMU matrix if updating neighbours
         :param two_d_matrix: An n * n matrix of clusters
-        :param neighbors: True if finding/updating neighbours, False if computing BMU
+        :param neighbours: True if finding/updating neighbours, False if computing BMU
 
         :return: None
         """
+        ## Iterate through the training data if neighbours is false, or BMU matrix otherwise
         for vector in one_d_matrix:
             distance_matrix = []
+            ## Iterate through the n * n cluster matrix
             for row in two_d_matrix:
                 for element in row:
+                    ## If updating neighbours (True), then compute the distance of all clusters to the BMU
                     if neighbours:
                         distance_matrix.append(distance(vector.prototype, element.prototype))
+                    ## If computing the BMU (False), then compute the distance of all clusters to the data vector
                     else:
                         distance_matrix.append(distance(vector, element.prototype))
+            ## If updating neighbours (True), then update each cluster whose distance to the BMU is within (less than)
+            ## the radius. Since each BMU is calculated in the order of the train-data matrix, we can find the index
+            ## of the data vector by finding the index of the BMU itself (to input in the update_neighbours function)
             if neighbours:
                 self.update_neighbours([idx for idx in range(len(distance_matrix)) if distance_matrix[idx] < radius],
                                        eta,
                                        self.traindata[one_d_matrix.index(vector)])
+            ## If computing the BMU (False), find the first vector in the distance matrix which has a minimum distance
+            ## to the current data vector, and add it to the BMU matrix
             else:
                 best_idx = distance_matrix.index(min(distance_matrix))
                 idx_1, idx_2 = find_2D_index(best_idx, self.n)
@@ -226,8 +240,10 @@ class Kohonen:
         :return: None
         """
         for idx in neighbour_list:
+            ## Convert the index of a given cluster from 1D to 2D so that we can find it in self.clusters
             idx_1, idx_2 = find_2D_index(idx, self.n)
             neighbour = self.clusters[idx_1][idx_2]
+            ## Updates the current neighbor cluster
             update_prototype(neighbour.prototype, eta, vector)
 
     def create_random_clusters(self):

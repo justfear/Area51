@@ -20,15 +20,18 @@ class Cluster:
         self.beginning = True
 
     def update_member_sets(self):
-        ## Move the current member set to previous, and clear the current member set
+        """
+        Makes a deep copy of the current member set and moves it to the previous member set.
+        Clears the current member set.
+        :return:
+        """
         self.previous_members = copy.deepcopy(self.current_members)
-        ## It does not matter if the membership has stabilized since both sets would be the same anyways
         self.current_members.clear()
 
 
 def distance(vector, prototype):
     """
-    Calculates the Euclidean distance between a given data vector and a prototype vector
+    Calculates the Euclidean distance between a given data vector and a prototype vector.
     :param vector: The specified data vector
     :param prototype: The specified prototype vector
     :return: The linear distance between the two vectors
@@ -41,7 +44,7 @@ def distance(vector, prototype):
 
 def prototype_computation(cluster, vector):
     """
-    Adds a given vector to the prototype variable of a given cluster for the prototype calculation
+    Adds a given vector to the prototype variable of a given cluster for the prototype calculation.
     :param cluster: The specified cluster
     :param vector: The specified vector
     :return: None
@@ -138,6 +141,7 @@ class KMeans:
         """
         Returns a cluster of the input client with client's assigned testdata vector
         :param client: a specified client
+
         :return: the cluster and the testdata vector of a client
         """
         idx = self.clients.index(client)
@@ -148,8 +152,8 @@ class KMeans:
     def create_random_clusters(self, idx):
         """
         Partitions all data vectors into randomly split clusters, computes prototypes simultaneously
-
         :param idx: Always starts at 1, a point of reference for the indexing of numbers in the random_values list
+
         :return: None
         """
         ## Create a list containing the ID of all vectors randomly split in K clusters
