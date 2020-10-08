@@ -109,20 +109,37 @@ class KMeans:
 
 
     def print_test(self):
+        """
+        prints the Prefetch threshold, hitrate, accuracy and sum of the hitrate and accuracy
+        :return: None
+        """
         print("Prefetch threshold =", self.prefetch_threshold)
         print("Hitrate:", self.hitrate)
         print("Accuracy:", self.accuracy)
         print("Hitrate+Accuracy =", self.hitrate + self.accuracy)
 
     def print_members(self):
+        """
+        prints every vector of each cluster
+        :return: None
+        """
         for i, cluster in enumerate(self.clusters):
             print("Members cluster", i, ":", cluster.current_members)
 
     def print_prototypes(self):
+        """
+        prints prototypes of each cluster
+        :return: None
+        """
         for i, cluster in enumerate(self.clusters):
             print("Prototype cluster", i, ":", cluster.prototype)
 
     def find_cluster(self, client):
+        """
+        Returns a cluster of the input client with client's assigned testdata vector
+        :param client: a specified client
+        :return: the cluster and the testdata vector of a client
+        """
         idx = self.clients.index(client)
         for cluster in self.clusters:
             if idx in cluster.current_members:

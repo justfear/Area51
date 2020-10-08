@@ -149,22 +149,39 @@ class Kohonen:
         self.hitrate = (useful_prefetched_urls + non_useful_prefetched_urls) / (len(self.requests) * len(self.testdata))
 
     def print_test(self):
+        """
+        prints the Prefetch threshold, hitrate, accuracy and sum of the hitrate and accuracy
+        :return: None
+        """
         print("Prefetch threshold =", self.prefetch_threshold)
         print("Hitrate:", self.hitrate)
         print("Accuracy:", self.accuracy)
         print("Hitrate+Accuracy =", self.hitrate + self.accuracy)
 
     def print_members(self):
+        """
+        prints every vector of each cluster
+        :return: None
+        """
         for i in range(self.n):
             for j in range(self.n):
                 print("Members cluster", (i, j), ":", self.clusters[i][j].current_members)
 
     def print_prototypes(self):
+        """
+        prints prototypes of each cluster
+        :return: None
+        """
         for i in range(self.n):
             for j in range(self.n):
                 print("Prototype cluster", (i, j), ":", self.clusters[i][j].prototype)
 
     def find_cluster(self, client):
+        """
+        Returns a cluster of the input client with client's assigned testdata vector
+        :param client: a specified client
+        :return: the cluster and the testdata vector of a client
+        """
         idx = self.clients.index(client)
         for row in self.clusters:
             for cluster in row:
