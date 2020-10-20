@@ -45,13 +45,12 @@ class Map:
         while self.delta < self.stop_crit:
             self.delta = 0.0
             for state in self.states.values():
-                old_utility = state.utility
-                best = state.selectBestAction(False)
-                print(best)
-                """
-                state.utility = state.reward + self.gamma * best
-                if state.utility - old_utility > self.delta:
-                    self.delta = state.utility - old_utility"""
+                if state.reward != 1 or state.reward != -1:
+                    old_utility = state.utility
+                    best = state.selectBestAction(False)
+                    state.utility = state.reward + self.gamma * best
+                    if state.utility - old_utility > self.delta:
+                        self.delta = state.utility - old_utility
 
     ### you write this method
     def policyIteration(self):
