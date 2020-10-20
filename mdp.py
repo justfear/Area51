@@ -46,7 +46,7 @@ class Map:
         while self.delta < self.stop_crit:
             self.delta = 0
             for state in self.states:
-                state.utility = state.reward + self.gamma * max(state.transitions)
+                state.utility = state.reward + self.gamma * state.selectBestAction()
 
 
 
