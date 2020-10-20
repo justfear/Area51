@@ -47,7 +47,10 @@ class Map:
         while self.delta < self.stop_crit:
             self.delta = 0
             for state in self.states:
+                old_utility = state.utility
                 state.utility = state.reward + self.gamma * state.selectBestAction()
+                if state.utility - old_utility > self.delta:
+                    self.delta = state.utility - old_utility
 
 
     ### you write this method
