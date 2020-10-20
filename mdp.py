@@ -47,7 +47,7 @@ class Map:
             for state in self.states.values():
                 old_utility = state.utility
                 best = state.selectBestAction(False)
-                print(float(best))
+                print(best)
                 """
                 state.utility = state.reward + self.gamma * best
                 if state.utility - old_utility > self.delta:
