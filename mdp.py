@@ -44,6 +44,8 @@ class Map:
     def valueIteration(self):
         while delta < self.stop_crit:
             delta = 0
+            for state in self.states:
+                state.utility = state.reward + self.gamma * max(state.transitions)
 
 
 
