@@ -35,6 +35,7 @@ class Map:
         self.gamma = 0.8
         self.n_rows = 0
         self.n_cols = 0
+        self.delta = 0
 
     class PrintType:
         ACTIONS = 0
@@ -42,8 +43,8 @@ class Map:
 
     ### you write this method
     def valueIteration(self):
-        while delta < self.stop_crit:
-            delta = 0
+        while self.delta < self.stop_crit:
+            self.delta = 0
             for state in self.states:
                 state.utility = state.reward + self.gamma * max(state.transitions)
 
