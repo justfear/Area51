@@ -20,7 +20,7 @@ class State:
         self.id = 0
 
     def computeEU(self, action):
-        return sum([trans[0] * trans[1].utility \
+        return sum([trans[0] * trans[1].utility
                     for trans in self.transitions[action]])
 
     def selectBestAction(self):
