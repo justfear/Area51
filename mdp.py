@@ -23,9 +23,9 @@ class State:
         return sum([trans[0] * trans[1].utility \
                     for trans in self.transitions[action]])
 
-    def selectBestAction(self):
+    def selectBestAction(self, action):
         best = max([(self.computeEU(a), a) for a in self.actions])
-        return best[1]
+        return best[1] if action else best[0]
 
 
 class Map:
@@ -41,16 +41,17 @@ class Map:
         ACTIONS = 0
         VALUES = 1
 
-    ### you write this method
     def valueIteration(self):
         while self.delta < self.stop_crit:
-            self.delta = 0
+            self.delta = 0.0
             for state in self.states.values():
-                print(state.utility)
                 old_utility = state.utility
-                state.utility = state.reward + self.gamma * state.selectBestAction()
+                best = state.selectBestAction(False)
+                print(float(best))
+                """
+                state.utility = state.reward + self.gamma * best
                 if state.utility - old_utility > self.delta:
-                    self.delta = state.utility - old_utility
+                    self.delta = state.utility - old_utility"""
 
     ### you write this method
     def policyIteration(self):
@@ -103,7 +104,7 @@ class Map:
                             to_print = to_print + \
                                        "{0: .3f}".format(self.states[(c, r)].utility)
                         elif print_type == self.PrintType.ACTIONS:
-                            a = self.states[(c, r)].selectBestAction()
+                            a = self.states[(c, r)].selectBestAction(True)
                             to_print = to_print + "  "
                             if a == 'left':
                                 to_print = to_print + "<<"
