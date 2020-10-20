@@ -31,7 +31,7 @@ class State:
 class Map:
     def __init__(self):
         self.states = {}
-        self.stop_crit = 0.01
+        self.stop_crit = 0.16
         self.gamma = 0.8
         self.n_rows = 0
         self.n_cols = 0
@@ -43,12 +43,11 @@ class Map:
 
     def valueIteration(self):
         while self.delta < self.stop_crit:
-            self.delta = 0.0
             for state in self.states.values():
                 if state.reward != 1.0 and state.reward != -1.0:
                     old_utility = state.utility
                     best = state.selectBestAction(False)
-                    state.utility = state.reward + self.gamma * best
+                    state.utility = state.reward + (self.gamma * best)
                     if state.utility - old_utility > self.delta:
                         self.delta = state.utility - old_utility
 
