@@ -4,7 +4,8 @@ import random
 import numpy
 from problem_utils import *
 
-class State :
+
+class State:
 
     def __init__(self):
         self.utility = 0.0
@@ -18,9 +19,9 @@ class State :
         self.isWall = False
         self.id = 0
 
-    def computeEU(self, action) :
+    def computeEU(self, action):
         return sum([trans[0] * trans[1].utility \
-            for trans in self.transitions[action]])
+                    for trans in self.transitions[action]])
 
     def selectBestAction(self):
         best = max([(self.computeEU(a), a) for a in self.actions])
@@ -36,23 +37,20 @@ class Map:
         self.n_cols = 0
         self.delta = 0.0
 
-
-    class PrintType :
+    class PrintType:
         ACTIONS = 0
         VALUES = 1
 
     ### you write this method
-    def valueIteration(self) :
+    def valueIteration(self):
         while self.delta < self.stop_crit:
             self.delta = 0
-            for state in self.states:
+            for state in self.states.values():
                 print(state.utility)
                 old_utility = state.utility
                 state.utility = state.reward + self.gamma * state.selectBestAction()
                 if state.utility - old_utility > self.delta:
                     self.delta = state.utility - old_utility
-
-
 
     ### you write this method
     def policyIteration(self):
@@ -68,12 +66,12 @@ class Map:
         for s in self.states.values():
             row = s.id
             ordinate[row, 0] = s.reward
-            coeffs[row,row] += 1.0
-            if not s.isGoal :
+            coeffs[row, row] += 1.0
+            if not s.isGoal:
                 probs = s.transitions[s.policy]
                 for p in probs:
                     col = p[1].id
-                    coeffs[row,col] += -self.gamma * p[0]
+                    coeffs[row, col] += -self.gamma * p[0]
         solution, _, _, _ = numpy.linalg.lstsq(coeffs, ordinate)
         for s in self.states.values():
             if not s.isGoal:
@@ -99,13 +97,13 @@ class Map:
                     to_print = to_print + ' '
                     if self.states[(c, r)].isGoal:
                         to_print = to_print + \
-                        "  {0: d}  ".format(int(self.states[(c,r)].utility))
-                    else :
-                        if print_type == self.PrintType.VALUES :
+                                   "  {0: d}  ".format(int(self.states[(c, r)].utility))
+                    else:
+                        if print_type == self.PrintType.VALUES:
                             to_print = to_print + \
-                                "{0: .3f}".format(self.states[(c,r)].utility)
-                        elif print_type == self.PrintType.ACTIONS :
-                            a = self.states[(c,r)].selectBestAction()
+                                       "{0: .3f}".format(self.states[(c, r)].utility)
+                        elif print_type == self.PrintType.ACTIONS:
+                            a = self.states[(c, r)].selectBestAction()
                             to_print = to_print + "  "
                             if a == 'left':
                                 to_print = to_print + "<<"
@@ -132,9 +130,8 @@ def makeRNProblem():
     in the problem_utils module.
     """
 
-
-    walls = [(1,1)]
-    actions = ['left', 'right','up','down']
+    walls = [(1, 1)]
+    actions = ['left', 'right', 'up', 'down']
     cols = 4
     rows = 3
 
@@ -148,36 +145,36 @@ def makeRNProblem():
     m = Map()
     m.n_cols = cols;
     m.n_rows = rows;
-    for i in range(m.n_cols) :
-        for j in range(m.n_rows) :
-            m.states[(i,j)] = State()
-            m.states[(i,j)].coords = (i,j)
-            m.states[(i,j)].isGoal = False
-            m.states[(i,j)].actions = actions
-            m.states[(i,j)].id = j * m.n_cols + i
-            m.states[(i,j)].reward = -0.04
+    for i in range(m.n_cols):
+        for j in range(m.n_rows):
+            m.states[(i, j)] = State()
+            m.states[(i, j)].coords = (i, j)
+            m.states[(i, j)].isGoal = False
+            m.states[(i, j)].actions = actions
+            m.states[(i, j)].id = j * m.n_cols + i
+            m.states[(i, j)].reward = -0.04
 
-    m.states[(3,0)].isGoal = True
-    m.states[(3,1)].isGoal = True
+    m.states[(3, 0)].isGoal = True
+    m.states[(3, 1)].isGoal = True
 
-    m.states[(3,0)].utility = 1.0
-    m.states[(3,1)].utility = -1.0
+    m.states[(3, 0)].utility = 1.0
+    m.states[(3, 1)].utility = -1.0
 
-    m.states[(3,0)].reward = 1.0
-    m.states[(3,1)].reward = -1.0
+    m.states[(3, 0)].reward = 1.0
+    m.states[(3, 1)].reward = -1.0
 
-    for t in walls :
+    for t in walls:
         m.states[t].isGoal = True
         m.states[t].isWall = True
         m.states[t].reward = 0.0
         m.states[t].utility = 0.0
 
-    for s in m.states.items() :
-        for a in actions :
-            s[1].transitions[a] = [\
-            (0.8, m.states[filterState(s[0], getSuccessor(s[0],a))]),
-            (0.1, m.states[filterState(s[0],getSuccessor(s[0], left(a)))]),
-            (0.1, m.states[filterState(s[0], getSuccessor(s[0], right(a)))])]
+    for s in m.states.items():
+        for a in actions:
+            s[1].transitions[a] = [ \
+                (0.8, m.states[filterState(s[0], getSuccessor(s[0], a))]),
+                (0.1, m.states[filterState(s[0], getSuccessor(s[0], left(a)))]),
+                (0.1, m.states[filterState(s[0], getSuccessor(s[0], right(a)))])]
     return m
 
 
@@ -187,11 +184,11 @@ def make2DProblem():
     defined in the problem_utils module.
     """
 
-    walls = [(1,1), (4,1), (5,1), (6,1),(7,1),(1,2), (7,2), (1,3), (5,3),
-             (7,3), (1,4), (5,4), (7,4), (1,5), (5,5), (7,5), (1,6), (5,6),
-             (7,6), (1,7), (5,7), (7,7), (1,8), (3,8), (4,8), (5,8),
-             (7,8), (1,9)]
-    actions = ['left', 'right','up','down']
+    walls = [(1, 1), (4, 1), (5, 1), (6, 1), (7, 1), (1, 2), (7, 2), (1, 3), (5, 3),
+             (7, 3), (1, 4), (5, 4), (7, 4), (1, 5), (5, 5), (7, 5), (1, 6), (5, 6),
+             (7, 6), (1, 7), (5, 7), (7, 7), (1, 8), (3, 8), (4, 8), (5, 8),
+             (7, 8), (1, 9)]
+    actions = ['left', 'right', 'up', 'down']
 
     def filterState(oldState, newState):
         if (newState[0] < 0 or newState[1] < 0 or newState[0] > 9 or
@@ -203,26 +200,26 @@ def make2DProblem():
     m = Map()
     m.n_cols = 10;
     m.n_rows = 10;
-    for i in range(m.n_cols) :
-        for j in range(m.n_rows) :
-            m.states[(i,j)] = State()
-            m.states[(i,j)].coords = (i,j)
-            m.states[(i,j)].isGoal = False
-            m.states[(i,j)].actions = actions
-            m.states[(i,j)].id = j * 10 + i
-            m.states[(i,j)].reward = -0.04
+    for i in range(m.n_cols):
+        for j in range(m.n_rows):
+            m.states[(i, j)] = State()
+            m.states[(i, j)].coords = (i, j)
+            m.states[(i, j)].isGoal = False
+            m.states[(i, j)].actions = actions
+            m.states[(i, j)].id = j * 10 + i
+            m.states[(i, j)].reward = -0.04
 
-    m.states[(0,9)].isGoal = True
-    m.states[(9,9)].isGoal = True
-    m.states[(9,0)].isGoal = True
+    m.states[(0, 9)].isGoal = True
+    m.states[(9, 9)].isGoal = True
+    m.states[(9, 0)].isGoal = True
 
-    m.states[(0,9)].utility = 1.0
-    m.states[(9,9)].utility = -1.0
-    m.states[(9,0)].utility = 1.0
+    m.states[(0, 9)].utility = 1.0
+    m.states[(9, 9)].utility = -1.0
+    m.states[(9, 0)].utility = 1.0
 
-    m.states[(0,9)].reward = 1.0
-    m.states[(9,9)].reward = -1.0
-    m.states[(9,0)].reward = 1.0
+    m.states[(0, 9)].reward = 1.0
+    m.states[(9, 9)].reward = -1.0
+    m.states[(9, 0)].reward = 1.0
 
     for t in walls:
         m.states[t].isGoal = True
@@ -230,13 +227,12 @@ def make2DProblem():
         m.states[t].utility = 0.0
         m.states[t].reward = 0.0
 
-
-    for s in m.states.items() :
-        for a in actions :
-            s[1].transitions[a] = [\
-            (0.7, m.states[filterState(s[0], getSuccessor(s[0],a))]),
-            (0.1, m.states[filterState(s[0], getSuccessor(s[0], opposite(a)))]),
-            (0.1, m.states[filterState(s[0],getSuccessor(s[0], left(a)))]),
-            (0.1, m.states[filterState(s[0], getSuccessor(s[0], right(a)))])]
+    for s in m.states.items():
+        for a in actions:
+            s[1].transitions[a] = [ \
+                (0.7, m.states[filterState(s[0], getSuccessor(s[0], a))]),
+                (0.1, m.states[filterState(s[0], getSuccessor(s[0], opposite(a)))]),
+                (0.1, m.states[filterState(s[0], getSuccessor(s[0], left(a)))]),
+                (0.1, m.states[filterState(s[0], getSuccessor(s[0], right(a)))])]
 
     return m
