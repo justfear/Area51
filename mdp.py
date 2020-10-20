@@ -43,14 +43,12 @@ class Map:
 
     ### you write this method
     def valueIteration(self):
+
         while self.delta < self.stop_crit:
             self.delta = 0
             for state in self.states:
                 state.utility = state.reward + self.gamma * state.selectBestAction()
 
-
-
-        pass  # placeholder, delete when implementing
 
     ### you write this method
     def policyIteration(self):
