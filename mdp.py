@@ -32,7 +32,7 @@ class Map:
     def __init__(self):
         self.states = {}
         self.stop_crit = 0.01
-        self.gamma = 0.8
+        self.gamma = 0.2
         self.n_rows = 0
         self.n_cols = 0
         self.delta = 0.0
@@ -42,9 +42,8 @@ class Map:
         VALUES = 1
 
     def valueIteration(self):
-        first = True
-        while self.delta > self.stop_crit or first:
-            first = False
+        self.delta = self.stop_crit * 2.0
+        while self.delta > self.stop_crit:
             self.delta = 0.0
             for state in self.states.values():
                 if not state.isGoal:
