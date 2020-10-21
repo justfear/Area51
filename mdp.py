@@ -55,9 +55,12 @@ class Map:
                     if numpy.abs(old_utility - state.utility) > self.delta:
                         self.delta = numpy.abs(old_utility - state.utility)
 
-    ### you write this method
     def policyIteration(self):
-        ### 1. initialize random policy
+        for state in self.states.values():
+            state.policy = state.transitions[random.randint(0, 3)]
+
+        for state in self.states.values():
+
         ### 2 repeat policy iteration loop until policy is stable
 
         pass  # placeholder, delete when implementing
