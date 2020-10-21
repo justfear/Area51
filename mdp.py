@@ -58,7 +58,7 @@ class Map:
         actions = ['left', 'right', 'down', 'up']
         for state in self.states.values():
             if not state.isGoal:
-                state.policy = state.transitions[actions[random.randint(0, 3)]]
+                state.policy = actions[random.randint(0, 3)]
         unchanged = False
         while not unchanged:
             unchanged = True
