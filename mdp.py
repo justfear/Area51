@@ -55,13 +55,19 @@ class Map:
                         self.delta = numpy.abs(old_utility - state.utility)
 
     def policyIteration(self):
+        ## Randomly initialize all non-goal states' policies
         actions = ['left', 'right', 'down', 'up']
         for state in self.states.values():
             if not state.isGoal:
                 state.policy = actions[random.randint(0, 3)]
+
         unchanged = False
+        ## While the policy has not converged
         while not unchanged:
             unchanged = True
+            ## Compute all utilities for the current policy and simultaneously compute all "best" utilities
+            ## Best utilities must be computed beforehand as the utilities of the states will change after
+            ## calling calculateUtilitiesLinear()
             best_utilities = self.calculateUtilitiesLinear()
             for state in self.states.values():
                 if not state.isGoal and best_utilities[state] != state.policy:
@@ -74,6 +80,7 @@ class Map:
         coeffs = numpy.zeros((n_states, n_states))
         ordinate = numpy.zeros((n_states, 1))
         for s in self.states.values():
+            ## Compute the "best" utilities before setting utilities equal to the linear solver's solution
             best_utilities[s] = s.selectBestAction(True)
             row = s.id
             ordinate[row, 0] = s.reward
