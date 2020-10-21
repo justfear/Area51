@@ -62,17 +62,19 @@ class Map:
         unchanged = False
         while not unchanged:
             unchanged = True
-            self.calculateUtilitiesLinear()
+            best_utilities = self.calculateUtilitiesLinear()
             for state in self.states.values():
-                if not state.isGoal and state.selectBestAction(False) > state.utility:
-                    state.policy = state.selectBestAction(True)
+                if not state.isGoal and best_utilities[state] != state.policy:
+                    state.policy = best_utilities[state]
                     unchanged = False
 
     def calculateUtilitiesLinear(self):
+        best_utilities = {}
         n_states = len(self.states)
         coeffs = numpy.zeros((n_states, n_states))
         ordinate = numpy.zeros((n_states, 1))
         for s in self.states.values():
+            best_utilities[s] = s.selectBestAction(True)
             row = s.id
             ordinate[row, 0] = s.reward
             coeffs[row, row] += 1.0
@@ -85,6 +87,7 @@ class Map:
         for s in self.states.values():
             if not s.isGoal:
                 s.utility = solution[s.id, 0]
+        return best_utilities
 
     def printActions(self):
         self.printMaze(self.PrintType.ACTIONS)
