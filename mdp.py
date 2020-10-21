@@ -32,7 +32,7 @@ class Map:
     def __init__(self):
         self.states = {}
         self.stop_crit = 0.01
-        self.gamma = 0.2
+        self.gamma = 0.8
         self.n_rows = 0
         self.n_cols = 0
         self.delta = 0.0
@@ -44,12 +44,15 @@ class Map:
     def valueIteration(self):
         self.delta = self.stop_crit * 2.0
         while self.delta > self.stop_crit:
+        ## Runs the loop until delta is less than the stop point
             self.delta = 0.0
             for state in self.states.values():
                 if not state.isGoal:
                     old_utility = state.utility
                     best = state.selectBestAction(False)
+                    ## Bellman's update equation
                     state.utility = state.reward + (self.gamma * best)
+                    ## Updating delta
                     if numpy.abs(old_utility - state.utility) > self.delta:
                         self.delta = numpy.abs(old_utility - state.utility)
 
