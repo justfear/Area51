@@ -55,6 +55,10 @@ class Map:
                         self.delta = numpy.abs(old_utility - state.utility)
 
     def policyIteration(self):
+        actions = ['left', 'right', 'down', 'up']
+        for state in self.states.values():
+            if not state.isGoal:
+                state.policy = state.transitions[actions[random.randint(0, 3)]]
         unchanged = False
         while not unchanged:
             unchanged = True
@@ -173,7 +177,6 @@ def makeRNProblem():
         m.states[t].isWall = True
         m.states[t].reward = 0.0
         m.states[t].utility = 0.0
-        m.states[t].policy = m.states[t].transitions[actions[random.randint(0, 3)]]
 
     for s in m.states.items():
         for a in actions:
