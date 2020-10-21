@@ -42,13 +42,10 @@ class Map:
         VALUES = 1
 
     def valueIteration(self):
-        i = 0
         first = True
         while self.delta > self.stop_crit or first:
             first = False
             self.delta = 0.0
-            i += 1
-            print("round: ", i)
             for state in self.states.values():
                 if state.utility != 1.0 and state.utility != -1.0:
                     old_utility = state.utility
