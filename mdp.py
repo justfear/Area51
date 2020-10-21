@@ -56,12 +56,11 @@ class Map:
                         self.delta = numpy.abs(old_utility - state.utility)
 
     def policyIteration(self):
-        for state in self.states.values():
-            state.policy = state.transitions[random.randint(0, 3)]
 
         for state in self.states.values():
+            if state.utility != 1.0 and state.utility != -1.0:
 
-        ### 2 repeat policy iteration loop until policy is stable
+
 
         pass  # placeholder, delete when implementing
 
@@ -169,11 +168,13 @@ def makeRNProblem():
     m.states[(3, 0)].reward = 1.0
     m.states[(3, 1)].reward = -1.0
 
+
     for t in walls:
         m.states[t].isGoal = True
         m.states[t].isWall = True
         m.states[t].reward = 0.0
         m.states[t].utility = 0.0
+        m.states[t].policy = m.states[t].transitions[random.randint(0,3)]
 
     for s in m.states.items():
         for a in actions:
