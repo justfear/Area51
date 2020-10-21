@@ -31,7 +31,7 @@ class State:
 class Map:
     def __init__(self):
         self.states = {}
-        self.stop_crit = 0.16
+        self.stop_crit = 0.4
         self.gamma = 0.8
         self.n_rows = 0
         self.n_cols = 0
@@ -42,16 +42,21 @@ class Map:
         VALUES = 1
 
     def valueIteration(self):
+        first = True
+        i = 0
         while self.delta < self.stop_crit:
-            delta = 0.0
+            self.delta = 0.0
+            i += 1
+            print("round: ", i)
             for state in self.states.values():
-                if state.reward != 1.0 and state.reward != -1.0:
+                if state.utility != 1.0 and state.utility != -1.0:
                     old_utility = state.utility
                     best = state.selectBestAction(False)
                     state.utility = state.reward + (self.gamma * best)
-                    if state.utility - old_utility > self.delta:
-                        self.delta = state.utility - old_utility
-                        print(self.delta)
+                    print(state.utility)
+                    if numpy.abs(state.utility - old_utility) > self.delta and not first:
+                        self.delta = numpy.abs(state.utility - old_utility)
+            first = False
 
     ### you write this method
     def policyIteration(self):
